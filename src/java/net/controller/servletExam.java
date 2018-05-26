@@ -82,6 +82,7 @@ public class servletExam extends HttpServlet {
 
         String action = request.getParameter("action");
         String id = request.getParameter("id");
+        String title = request.getParameter("title");
         String descriptionE = request.getParameter("descriptionExa");
         String note = request.getParameter("note");
         String typeExam = request.getParameter("typeExam");
@@ -101,7 +102,8 @@ public class servletExam extends HttpServlet {
             case "insert":
                 Date d = new Date(); 
                 SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-
+                
+                model.setTitle(title);
                 model.setDescription(descriptionE);
                 model.setQuestions(0);
                 model.setCreatDate(formater.format(d));

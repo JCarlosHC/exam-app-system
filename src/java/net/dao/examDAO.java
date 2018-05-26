@@ -20,8 +20,8 @@ public class examDAO {
     public boolean insert(exam model) {
         String id = "SELECT MAX(ID_CREAEXA) + 1 from ae_creaexa";    
         String sql = "INSERT INTO ae_creaexa " +
-                "(ID_CREAEXA, DESCRIPCION, NUM_PREGUNTAS, FECHA_CREACION, FECHA_BAJA, CAL_MAX, ID_USUARIO, ID_ESTATUS, ID_TIPOEXA, ID_MATERIA) " +
-                "VALUES(?,?,?,?,?,?,?,?,?,?)";    
+                "(ID_CREAEXA, DESCRIPCION, NUM_PREGUNTAS, FECHA_CREACION, FECHA_BAJA, CAL_MAX, ID_USUARIO, ID_ESTATUS, ID_TIPOEXA, ID_MATERIA, TITLE) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?)";    
         int idExam = 0;
         
         try {
@@ -42,6 +42,7 @@ public class examDAO {
             ps.setInt(8, model.getId_status());
             ps.setInt(9, model.getId_typeExa());
             ps.setString(10, model.getId_subject());
+            ps.setString(11, model.getTitle());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -79,15 +80,15 @@ public class examDAO {
     }
     public List<exam> getAll() {
         ArrayList<exam> lista = new ArrayList<exam>();
-        String sql = "SELECT ex.ID_CREAEXA, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
+        String sql = "SELECT ex.ID_CREAEXA, ex.TITLE, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
                 "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA FROM ae_creaexa ex;";
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
             ResultSet rs = sta.executeQuery();
 
             while (rs.next()) {
-                exam sc = new exam(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5),
-                        rs.getFloat(6), rs.getInt(7), rs.getInt(8), rs.getInt(9), rs.getString(10));
+                exam sc = new exam(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6),
+                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11));
                 lista.add(sc);
             }
 

@@ -2,6 +2,7 @@ package net.model;
 
 public class exam {
     private int id;
+    private String title;
     private String description;
     private int questions;
     private String creatDate;
@@ -19,8 +20,9 @@ public class exam {
         this.id = id;
     }
 
-    public exam(int id, String description, int questions, String creatDate, String dischargeDate, float note, int id_user, int id_status, int id_typeExa, String id_subject) {
+    public exam(int id, String title, String description, int questions, String creatDate, String dischargeDate, float note, int id_user, int id_status, int id_typeExa, String id_subject) {
         this.id = id;
+        this.title = title;
         this.description = description;
         this.questions = questions;
         this.creatDate = creatDate;
@@ -39,7 +41,15 @@ public class exam {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
     public String getDescription() {
         return description;
     }

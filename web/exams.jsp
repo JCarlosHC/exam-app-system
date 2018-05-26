@@ -37,7 +37,7 @@
                     <li class="breadcrumb-item">
                         <a href="#">Exams</a>
                     </li>
-                    <li class="breadcrumb-item active">Lista</li>
+                    <li class="breadcrumb-item active">Administratio panel</li>
                 </ol>
 
                 <div class="card mb-3">
@@ -84,6 +84,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Title</th>
                                         <th>Description</th>
                                         <th>Number questions</th>
                                         <th>Creating date</th>
@@ -99,6 +100,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Title</th>
                                         <th>Description</th>
                                         <th>Number questions</th>
                                         <th>Creating date</th>
@@ -120,6 +122,7 @@
                                     %>
                                     <tr>
                                         <td><%=e.getId()%></td>
+                                        <td><%=e.getTitle()%></td>
                                         <td><%=e.getDescription()%></td>
                                         <td><%=e.getQuestions()%></td>
                                         <td><%=e.getCreatDate()%></td>
@@ -177,6 +180,12 @@
                                 </button>                    
                             </div>
                             <div class="modal-body">
+                                <div class="form-group row">
+                                    <label for="title" class="col-sm-3 col-form-label">Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="title" name="title" required>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="descriptionExa" class="col-sm-3 col-form-label">Description</label>
                                     <div class="col-sm-9">
