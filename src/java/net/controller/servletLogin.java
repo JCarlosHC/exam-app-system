@@ -46,8 +46,14 @@ public class servletLogin extends HttpServlet {
         user usr = new user();
         
         if(action.equals("login")){
-            if(usrDao.validate(usu, pass) && sesion.getAttribute("userId") == null){
-                sesion.setAttribute("userId", usu);
+            usr = usrDao.validate(usu, pass);
+            
+            if(usr != null && sesion.getAttribute("userId") == null){
+                sesion.setAttribute("IdtableUser", usr.getId());
+                sesion.setAttribute("userId", usr.getEmail());
+                sesion.setAttribute("userName", usr.getFirstname());
+                sesion.setAttribute("userEmail", usr.getEmail());
+                sesion.setAttribute("userType", usr.getId_tipo());
             }
             response.sendRedirect("index.jsp");
             
