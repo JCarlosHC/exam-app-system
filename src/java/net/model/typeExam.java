@@ -1,6 +1,6 @@
 package net.model;
 
-public class typeuser {
+public class typeExam {
     private int id;
     private String description;
 

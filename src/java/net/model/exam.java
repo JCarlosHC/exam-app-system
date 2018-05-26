@@ -1,28 +1,35 @@
 package net.model;
 
-public class user {
+public class exam {
     private int id;
-    private String firstname;
-    private String psurname;
-    private String msurname;
-    private String email;
-    private String phone;
-    private String password;
-    private int id_tipo;
+    private String description;
+    private int questions;
+    private String creatDate;
+    private String dischargeDate;
+    private float note;
+    private int id_user;
     private int id_status;
-
-    public user() {
+    private int id_typeExa;
+    private String id_subject;
+   
+    public exam() {
     }
 
-    public user(int id, String firstname, String psurname, String msurname, String email, String phone, int id_tipo, int id_status) {
+    public exam(int id) {
         this.id = id;
-        this.firstname = firstname;
-        this.psurname = psurname;
-        this.msurname = msurname;
-        this.email = email;
-        this.phone = phone;
-        this.id_tipo = id_tipo;
+    }
+
+    public exam(int id, String description, int questions, String creatDate, String dischargeDate, float note, int id_user, int id_status, int id_typeExa, String id_subject) {
+        this.id = id;
+        this.description = description;
+        this.questions = questions;
+        this.creatDate = creatDate;
+        this.dischargeDate = dischargeDate;
+        this.note = note;
+        this.id_user = id_user;
         this.id_status = id_status;
+        this.id_typeExa = id_typeExa;
+        this.id_subject = id_subject;
     }
 
     public int getId() {
@@ -33,60 +40,52 @@ public class user {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPsurname() {
-        return psurname;
+    public int getQuestions() {
+        return questions;
     }
 
-    public void setPsurname(String psurname) {
-        this.psurname = psurname;
+    public void setQuestions(int questions) {
+        this.questions = questions;
     }
 
-    public String getMsurname() {
-        return msurname;
+    public String getCreatDate() {
+        return creatDate;
     }
 
-    public void setMsurname(String msurname) {
-        this.msurname = msurname;
+    public void setCreatDate(String creatDate) {
+        this.creatDate = creatDate;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDischargeDate() {
+        return dischargeDate;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDischargeDate(String dischargeDate) {
+        this.dischargeDate = dischargeDate;
     }
 
-    public String getPhone() {
-        return phone;
+    public float getNote() {
+        return note;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setNote(float note) {
+        this.note = note;
     }
 
-    public String getPassword() {
-        return password;
+    public int getId_user() {
+        return id_user;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getId_tipo() {
-        return id_tipo;
-    }
-
-    public void setId_tipo(int id_tipo) {
-        this.id_tipo = id_tipo;
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 
     public int getId_status() {
@@ -96,6 +95,23 @@ public class user {
     public void setId_status(int id_status) {
         this.id_status = id_status;
     }
+
+    public int getId_typeExa() {
+        return id_typeExa;
+    }
+
+    public void setId_typeExa(int id_typeExa) {
+        this.id_typeExa = id_typeExa;
+    }
+
+    public String getId_subject() {
+        return id_subject;
+    }
+
+    public void setId_subject(String id_subject) {
+        this.id_subject = id_subject;
+    }
+
     
     
 }
