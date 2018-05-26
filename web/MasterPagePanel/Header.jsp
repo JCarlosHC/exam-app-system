@@ -71,6 +71,9 @@
                     <li>
                         <a href="servletExam?action=toList">Listar examenes</a>
                     </li>
+                    <li>
+                        <a href="servletExam?action=myExams">Mis examenes</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Alumnos">
