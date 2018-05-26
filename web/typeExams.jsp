@@ -1,4 +1,4 @@
-<%@page import="net.model.typeuser"%>
+<%@page import="net.model.typeExam"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Juan Carlos Hernández">
-        <title>Exam Application System - Type users</title>
+        <title>Exam Application System - Type exams</title>
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
@@ -33,14 +33,14 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Tipo de usuarios</a>
+                        <a href="#">Tipo de exams</a>
                     </li>
                     <li class="breadcrumb-item active">Lista</li>
                 </ol>
 
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Listado de tipo de usuarios</div>
+                        <i class="fa fa-table"></i> Listado de tipo de examenes</div>
                     <div class="card-body">
                         <div class="form-group">
                             <div class="row">
@@ -96,21 +96,21 @@
                                 </tfoot>
                                 <tbody>
                                     <%
-                                        ArrayList<typeuser> lista = (ArrayList<typeuser>) request.getAttribute("listaType");
+                                        ArrayList<typeExam> lista = (ArrayList<typeExam>) request.getAttribute("listaType");
                                         for (int i = 0; i < lista.size(); i++) {
-                                            typeuser c = lista.get(i);
+                                            typeExam c = lista.get(i);
 
                                     %>
                                     <tr>
                                         <td><%=c.getId()%></td>
                                         <td><%=c.getDescription()%></td>
                                         <td>
-                                            <a data-toggle="modal" data-target="#editType" data-id="<%=c.getId()%>" 
+                                            <a data-toggle="modal" data-target="#editTypeExam" data-id="<%=c.getId()%>" 
                                                data-description="<%=c.getDescription()%>" class="btn btn-warning">
                                                 <span class="fa fa-edit"></span>
                                                 Edit
                                             </a>			
-                                            <a class="btn btn-danger" href="servletABCUsers?action=deleteType&idType=<%=c.getId()%>">
+                                            <a class="btn btn-danger" href="servletExam?action=deleteType&idType=<%=c.getId()%>">
                                                 <span class="fa fa-trash"></span>
                                                 Delete
                                             </a>		
@@ -123,7 +123,6 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
                 <!-- /.container-fluid-->
                 <!-- /.content-wrapper-->
@@ -138,7 +137,7 @@
             <div class="modal fade" id="newType" tabindex="-1" role="dialog" aria-labellebdy="title" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form action="servletABCUsers" method="post">
+                        <form action="servletExam" method="post">
                             <div class="modal-header bg-light">
                                 <h5 class="modal-title" id="title">New Type</h5>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -164,10 +163,10 @@
             </div> 
 
             <!-- Edit modal -->
-            <div class="modal fade" id="editType" tabindex="-1" role="dialog" aria-labellebdy="title" aria-hidden="true">
+            <div class="modal fade" id="editTypeExam" tabindex="-1" role="dialog" aria-labellebdy="title" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form action="servletABCUsers" method="post">
+                        <form action="servletExam" method="post">
                             <div class="modal-header bg-light">
                                 <h5 class="modal-title" id="title">Edit Type</h5>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
