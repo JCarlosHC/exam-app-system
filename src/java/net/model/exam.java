@@ -3,6 +3,7 @@ package net.model;
 public class exam {
     private int id;
     private String title;
+    private String image;
     private String description;
     private int questions;
     private String creatDate;
@@ -48,6 +49,14 @@ public class exam {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
     
     public String getDescription() {
