@@ -1,3 +1,9 @@
 dist/
 test/
 build/
+node_modules/
+web/vue_components/dist
+web/vue_components/node_modules
+npm-debug.log
+yarn-error.log
+.DS_Store
