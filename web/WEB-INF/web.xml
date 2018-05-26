@@ -24,6 +24,10 @@
         <servlet-name>servletABCUsers</servlet-name>
         <servlet-class>net.controller.servletABCUsers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletExam</servlet-name>
+        <servlet-class>net.controller.servletExam</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletABCPlan</servlet-name>
         <url-pattern>/servletABCPlan</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>servletABCUsers</servlet-name>
         <url-pattern>/servletABCUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletExam</servlet-name>
+        <url-pattern>/servletExam</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

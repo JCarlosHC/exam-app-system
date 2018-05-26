@@ -5,29 +5,43 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import net.model.typeuser;
-import net.model.user;
+import net.model.typeExam;
+import net.model.exam;
 
-public class userDAO {
+public class examDAO {
     
     ConnectionDB cn;
 
-    public userDAO(ConnectionDB _cn) {
+    public examDAO(ConnectionDB _cn) {
         this.cn = _cn;
     }
     
-    public boolean insert(user model) {
-        String sql = "call SVURS_RegisterUsr(?,?,?,?,?,?,?,?)";    
+    //Funciones CRUD basic information
+    public boolean insert(exam model) {
+        String id = "SELECT MAX(ID_CREAEXA) + 1 from ae_creaexa";    
+        String sql = "INSERT INTO ae_creaexa " +
+                "(ID_CREAEXA, DESCRIPCION, NUM_PREGUNTAS, FECHA_CREACION, FECHA_BAJA, CAL_MAX, ID_USUARIO, ID_ESTATUS, ID_TIPOEXA, ID_MATERIA) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?)";    
+        int idExam = 0;
+        
         try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                idExam = rs.getInt(1);
+            }
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
-            ps.setString(1, model.getFirstname());
-            ps.setString(2, model.getPsurname());
-            ps.setString(3, model.getMsurname());
-            ps.setString(4, model.getEmail());
-            ps.setString(5, model.getPhone());
-            ps.setString(6, model.getPassword());
-            ps.setInt(7, model.getId_tipo());
+            ps.setInt(1, idExam);
+            ps.setString(2, model.getDescription());
+            ps.setInt(3, model.getQuestions());
+            ps.setString(4, model.getCreatDate());
+            ps.setString(5, model.getDischargeDate());
+            ps.setFloat(6, model.getNote());
+            ps.setInt(7, model.getId_user());
             ps.setInt(8, model.getId_status());
+            ps.setInt(9, model.getId_typeExa());
+            ps.setString(10, model.getId_subject());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -35,7 +49,7 @@ public class userDAO {
         }
     }
     public boolean delete(int id){
-        String sql = "UPDATE ae_usuarios SET ID_ESTATUS = 0 WHERE ID_USUARIO=?";     
+        String sql = "UPDATE ae_creaexa SET ID_ESTATUS = 0, FECHA_BAJA = NOW() WHERE ID_CREAEXA=?"; 
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
@@ -45,54 +59,35 @@ public class userDAO {
             return false;
         }
     }
-    public boolean update(user model) {
-        String sql = "UPDATE ae_usuarios SET " +
-                    "NOMBRE=?, APE_PATERNO=?, APE_MATERNO=?, CORREO=?, TELEFONO=?,ID_TIPOUSUARIO=? " +
-                    "WHERE ID_USUARIO=?";    
+    public boolean update(exam model) {
+        String sql = "UPDATE ae_creaexa SET " +
+                    "DESCRIPCION=?, CAL_MAX=?, ID_TIPOEXA=?, ID_MATERIA=? " +
+                    "WHERE ID_CREAEXA=?";    
+                
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
-            ps.setString(1, model.getFirstname());
-            ps.setString(2, model.getPsurname());
-            ps.setString(3, model.getMsurname());
-            ps.setString(4, model.getEmail());
-            ps.setString(5, model.getPhone());
-            ps.setInt(6, model.getId_tipo());
-            ps.setInt(7, model.getId());
+            ps.setString(1, model.getDescription());
+            ps.setFloat(2, model.getNote());
+            ps.setInt(3, model.getId_typeExa());
+            ps.setString(4, model.getId_subject());
+            ps.setInt(5, model.getId());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
             return false;
         }
     }
-    public boolean validate(String user, String pass) {
-        String sql = "call SVURS_ValidateUsr(?,?)";    
-        try {
-            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
-            ps.setString(1, user);
-            ps.setString(2, pass);
-            
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-    public List<user> getAll() {
-        ArrayList<user> lista = new ArrayList<user>();
-        String sql = "SELECT u.ID_USUARIO, u.NOMBRE, u.APE_PATERNO,u.APE_MATERNO, u.CORREO, u.TELEFONO, t.ID_TIPOUSUARIO, e.ID_ESTATUS " +
-                    "FROM ae_usuarios u INNER JOIN ae_tipousuario t ON u.ID_TIPOUSUARIO = t.ID_TIPOUSUARIO " +
-                    "INNER JOIN ae_estatus e ON u.ID_ESTATUS = e.ID_ESTATUS WHERE e.DESCRIPCION = 'Activo'";
+    public List<exam> getAll() {
+        ArrayList<exam> lista = new ArrayList<exam>();
+        String sql = "SELECT ex.ID_CREAEXA, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
+                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA FROM ae_creaexa ex;";
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
             ResultSet rs = sta.executeQuery();
 
             while (rs.next()) {
-                user sc = new user(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),
-                        rs.getString(6),rs.getInt(7),rs.getInt(8));
+                exam sc = new exam(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5),
+                        rs.getFloat(6), rs.getInt(7), rs.getInt(8), rs.getInt(9), rs.getString(10));
                 lista.add(sc);
             }
 
@@ -102,11 +97,10 @@ public class userDAO {
         return lista;
     }
     
-    //Tipos de usuario
-    
-    public boolean insertType(typeuser model) {
-        String id = "SELECT MAX(ID_TIPOUSUARIO) + 1 from ae_tipousuario";    
-        String sql = "INSERT INTO ae_tipousuario(ID_TIPOUSUARIO, DESCRIPCION) VALUES(?,?)";    
+    //Funtions CRUD Types of the exams
+    public boolean insertType(typeExam model) {
+        String id = "SELECT MAX(ID_TIPOEXA) + 1 from ae_tipoexa";    
+        String sql = "INSERT INTO ae_tipoexa(ID_TIPOEXA, DESCRIPCION) VALUES(?,?)";    
         int idType = 0;
         
         try {
@@ -126,7 +120,7 @@ public class userDAO {
         }
     }
     public boolean deleteType(int id){
-        String sql = "DELETE FROM ae_tipousuario WHERE ID_TIPOUSUARIO=?";     
+        String sql = "DELETE FROM ae_tipoexa WHERE ID_TIPOEXA=?";     
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
@@ -136,8 +130,8 @@ public class userDAO {
             return false;
         }
     }
-    public boolean updateType(typeuser model) {
-        String sql = "UPDATE ae_tipousuario SET DESCRIPCION = ? WHERE ID_TIPOUSUARIO=?";
+    public boolean updateType(typeExam model) {
+        String sql = "UPDATE ae_tipoexa SET DESCRIPCION = ? WHERE ID_TIPOEXA=?";
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
             ps.setString(1, model.getDescription());

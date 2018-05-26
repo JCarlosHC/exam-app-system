@@ -93,6 +93,17 @@ $(document).ready(function () {
         modal.find('.modal-body #description').val(recipient1);
     });
     
+    // Type exam
+    $('#editTypeExam').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var recipient0 = button.data('id');
+        var recipient1 = button.data('description');
+        
+        var modal = $(this);
+        modal.find('.modal-body #idType').val(recipient0);
+        modal.find('.modal-body #description').val(recipient1);
+    });
+    
 });
 
 

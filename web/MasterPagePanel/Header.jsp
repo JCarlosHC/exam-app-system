@@ -60,16 +60,16 @@
                 </ul>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Examenes">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamPages" data-parent="#exampleAccordion">
                     <i class="fa fa-folder-open"></i>
                     <span class="nav-link-text">Examenes</span>
                 </a>
-                <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+                <ul class="sidenav-second-level collapse" id="collapseExamPages">
                     <li>
-                        <a href="login.html">Tipo de usuarios</a>
+                        <a href="servletExam?action=typeExams">Tipo de examenes</a>
                     </li>
                     <li>
-                        <a href="register.html">Listar usuarios</a>
+                        <a href="servletExam?action=toList">Listar examenes</a>
                     </li>
                 </ul>
             </li>
