@@ -64,8 +64,9 @@ public class userDAO {
             return false;
         }
     }
-    public boolean validate(String user, String pass) {
+    public user validate(String user, String pass) {
         String sql = "call SVURS_ValidateUsr(?,?)";    
+        user usuario = new user();
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
             ps.setString(1, user);
@@ -74,12 +75,18 @@ public class userDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                return true;
+                usuario.setId(rs.getInt(1));
+                usuario.setFirstname(rs.getString(2));
+                usuario.setPsurname(rs.getString(3));
+                usuario.setMsurname(rs.getString(4));
+                usuario.setEmail(rs.getString(5));
+                usuario.setPhone(rs.getString(6));
+                usuario.setId_tipo(rs.getInt(7));
             }
-            return false;
         } catch (SQLException e) {
-            return false;
+            return null;
         }
+        return usuario;
     }
     public List<user> getAll() {
         ArrayList<user> lista = new ArrayList<user>();
