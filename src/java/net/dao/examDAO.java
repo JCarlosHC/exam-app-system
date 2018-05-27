@@ -18,22 +18,12 @@ public class examDAO {
     }
     
     //Funciones CRUD basic information
-    public boolean insert(exam model) {
-        String id = "SELECT MAX(ID_CREAEXA) + 1 from ae_creaexa";    
-        String sql = "INSERT INTO ae_creaexa " +
-                "(ID_CREAEXA, DESCRIPCION, NUM_PREGUNTAS, FECHA_CREACION, FECHA_BAJA, CAL_MAX, ID_USUARIO, ID_ESTATUS, ID_TIPOEXA, ID_MATERIA, TITLE) " +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?)";    
-        int idExam = 0;
-        
+    public boolean insertOrUpdate(exam model) {
+        String sql = "call SVURS_CRUDBasicInformation(?,?,?,?,?,?,?,?,?,?,?)";
+        int id = 0;
         try {
-            PreparedStatement sta = cn.getConnection().prepareStatement(id);
-            ResultSet rs = sta.executeQuery();
-
-            while (rs.next()) {
-                idExam = rs.getInt(1);
-            }
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
-            ps.setInt(1, idExam);
+            ps.setInt(1, model.getId());
             ps.setString(2, model.getDescription());
             ps.setInt(3, model.getQuestions());
             ps.setString(4, model.getCreatDate());
@@ -44,7 +34,11 @@ public class examDAO {
             ps.setInt(9, model.getId_typeExa());
             ps.setString(10, model.getId_subject());
             ps.setString(11, model.getTitle());
-            ps.executeUpdate();
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               model.setId(rs.getInt(1));
+            }
             return true;
         } catch (SQLException e) {
             return false;
@@ -119,7 +113,26 @@ public class examDAO {
         }
         return lista;
     }
-    
+    public exam getExam(int id){
+        String sql = "SELECT ex.ID_CREAEXA, ex.TITLE, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
+                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA FROM ae_creaexa ex WHERE ex.ID_CREAEXA=?";
+        exam model = new exam();
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1, id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                model = new exam(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6),
+                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11));
+            }
+
+        } catch (SQLException e) {
+            model = null;
+        }
+        
+        return model;
+    }
     //Funtions CRUD Types of the exams
     public boolean insertType(typeExam model) {
         String id = "SELECT MAX(ID_TIPOEXA) + 1 from ae_tipoexa";    

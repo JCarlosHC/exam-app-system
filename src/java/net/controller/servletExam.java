@@ -50,6 +50,16 @@ public class servletExam extends HttpServlet {
                 request.setAttribute("myList", myList);
                 url = "myExams.jsp";
                 break;
+            case "getExam":
+                exam model;
+                if(Integer.parseInt(id) == 0){
+                    model = new exam(0,"","",0,null,null,0,0, 0,0, null);
+                }else{
+                    model = exDao.getExam(Integer.parseInt(id));
+                }
+                request.setAttribute("myExam", model);
+                url = "exam.jsp";
+                break;             
             case "delete":
                 if (exDao.delete(Integer.parseInt(id))) {
                     msg = "Se eliminó correctamente el examen";
@@ -106,10 +116,10 @@ public class servletExam extends HttpServlet {
         exam model = new exam();
 
         switch (action) {
-            case "insert":
+            case "saveInformationBasic": //The insert of basic information
                 Date d = new Date(); 
                 SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-                
+                model.setId(Integer.parseInt(id));
                 model.setTitle(title);
                 model.setDescription(descriptionE);
                 model.setQuestions(0);
@@ -121,12 +131,12 @@ public class servletExam extends HttpServlet {
                 model.setId_typeExa(Integer.parseInt(typeExam));
                 model.setId_subject(subject);
                 
-                if (exDao.insert(model)) {
+                if (exDao.insertOrUpdate(model)) {
                     msg = "Se guardo correctamente el examen";
-                    url = "servletExam?action=toList&success=true&msg=" + msg;
+                    url = "servletExam?action=getExam&id=" + model.getId() + "&success=true&msg=" + msg;
                 } else {
                     msg = "Ocurrio un error, el examen no fue guardado";
-                    url = "servletExam?action=toList&success=false&msg=" + msg;
+                    url = "servletExam?action=getExam&id=" + model.getId() + "&success=false&msg=" + msg;
                 }
                 break;
             case "insertType":
@@ -152,24 +162,6 @@ public class servletExam extends HttpServlet {
                     url = "servletExam?action=typeExams&success=false&msg=" + msg;
                 }
                 break;
-            case "update":
-//                model.setId(Integer.parseInt(id));
-//                model.setFirstname(firstname);
-//                model.setPsurname(pname);
-//                model.setMsurname(mname);
-//                model.setEmail(email);
-//                model.setPhone(phone);
-//                model.setId_tipo(Integer.parseInt(typeuser));
-//
-//                if (usrDao.update(model)) {
-//                    msg = "Se modifico correctamente el usuario";
-//                    url = "servletABCUsers?action=toList&success=true&msg=" + msg;
-//                } else {
-//                    msg = "Ocurrio un error, el usuario no fue modificado";
-//                    url = "servletABCUsers?action=toList&success=false&msg=" + msg;
-//                }
-                break;
-
             default:
                 break;
         }
