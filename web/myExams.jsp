@@ -90,12 +90,12 @@
                             <div class="list-group-item exam-report">
                                 <div class="row">
                                     <div class="col-sm-2">
-                                        <a href="~/instructor/course/@m.Id">
+                                        <a href="servletExam?action=getExam&id=<%=e.getId()%>">
                                             <img class="img-responsive" src="<%=e.getImage()%>" alt="<%=e.getTitle()%>" />
                                         </a>
                                     </div>
                                     <div class="col-sm-4">
-                                        <h4><a href="~/instructor/course/@m.Id"><%=e.getTitle()%></a></h4>
+                                        <h4><a href="servletExam?action=getExam&id=<%=e.getId()%>"><%=e.getTitle()%></a></h4>
                                         <p class="text-justify"><%=e.getDescription()%></p>
                                     </div>
                                     <div class="col-sm-2 text-center">
@@ -151,6 +151,12 @@
                                 </button>                    
                             </div>
                             <div class="modal-body">
+                                <div class="form-group row">
+                                    <label for="title" class="col-sm-3 col-form-label">Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="title" name="title" required>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="descriptionExa" class="col-sm-3 col-form-label">Description</label>
                                     <div class="col-sm-9">
