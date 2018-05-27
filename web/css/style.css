@@ -1,0 +1,8 @@
+.list-group-exams.padding-top .list-group-item{padding-top:10px; background-color: #dce5e2; margin-bottom: .4em;}
+.list-group-exams h4 {margin-top:0;}
+.list-group-exams .img-responsive {width: 70%;}
+.list-group-item .exam {padding-top:20px;}
+.exam-report h5 {color:#3b8c70;margin-top:0;}
+.exam-report .description {font-size:1.4em;}
+.exam {border-right:1px solid #eee;}
+.exam.last {border-right:none;}

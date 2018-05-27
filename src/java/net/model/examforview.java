@@ -8,8 +8,9 @@ public class examforview {
     private String averageTime;
     private float averageMark;
     private int totalStudents;
-
-    public examforview(int id, String title, String image, String description, String averageTime, float averageMark, int totalStudents) {
+    private float calMax;
+    
+    public examforview(int id, String title, String image, String description, String averageTime, float averageMark, int totalStudents, float calMax) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -17,6 +18,7 @@ public class examforview {
         this.averageTime = averageTime;
         this.averageMark = averageMark;
         this.totalStudents = totalStudents;
+        this.calMax = calMax;
     }
 
     public int getId() {
@@ -75,4 +77,11 @@ public class examforview {
         this.totalStudents = totalStudents;
     }
     
+     public float getCalMax() {
+        return calMax;
+    }
+
+    public void setcalMax(float calMax) {
+        this.calMax = calMax;
+    }
 }

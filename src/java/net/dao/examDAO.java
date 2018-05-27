@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.model.typeExam;
 import net.model.exam;
+import net.model.examforview;
 
 public class examDAO {
     
@@ -93,6 +94,27 @@ public class examDAO {
             }
 
         } catch (SQLException e) {
+            lista = null;
+        }
+        return lista;
+    }
+    public List<examforview> getMyExams(int iduser) {
+        ArrayList<examforview> lista = new ArrayList<examforview>();
+        String sql = "SELECT ex.ID_CREAEXA, ex.TITLE, ex.IMAGE, ex.DESCRIPCION, IFNULL(SEC_TO_TIME(averageTime(ex.ID_CREAEXA)),0) as AVERAGETIME," +
+                "IFNULL(averageMark(ex.ID_CREAEXA),0) as AVERAGEMARK, totalStudents(ex.ID_CREAEXA) as TOTALSTUDENTS, ex.CAL_MAX " +
+                "FROM ae_creaexa ex INNER JOIN ae_usuarios us ON ex.ID_USUARIO = us.ID_USUARIO WHERE ex.ID_USUARIO=?;";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1,iduser);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                examforview sc = new examforview(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), 
+                        rs.getString(5), rs.getFloat(6), rs.getInt(7), rs.getFloat(8));
+                lista.add(sc);
+            }
+
+            } catch (SQLException e) {
             lista = null;
         }
         return lista;

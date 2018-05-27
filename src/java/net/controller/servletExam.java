@@ -14,6 +14,7 @@ import net.dao.catalogs;
 import net.dao.examDAO;
 import net.model.typeExam;
 import net.model.exam;
+import net.model.examforview;
 
 public class servletExam extends HttpServlet {
 
@@ -26,7 +27,8 @@ public class servletExam extends HttpServlet {
         String idType = request.getParameter("idType");
         String msgresult = request.getParameter("msg");
         String success = request.getParameter("success");
-
+        int user = (int) request.getSession().getAttribute("IdtableUser");
+        
         String url = "", msg;
         RequestDispatcher rd;
         ConnectionDB cn = new ConnectionDB();
@@ -42,6 +44,11 @@ public class servletExam extends HttpServlet {
                 List<exam> lista = exDao.getAll();
                 request.setAttribute("lista", lista);
                 url = "exams.jsp";
+                break;
+            case "myExams":
+                List<examforview> myList = exDao.getMyExams(user);
+                request.setAttribute("myList", myList);
+                url = "myExams.jsp";
                 break;
             case "delete":
                 if (exDao.delete(Integer.parseInt(id))) {
