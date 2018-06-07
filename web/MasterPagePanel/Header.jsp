@@ -10,7 +10,7 @@
     <!--<a class="navbar-brand" href="index.html">Start Bootstrap</a>-->
     <div class="navbar-brand">
         <a href="index.jsp">
-            <img src="images/ipn-logo2.png" alt="Logo IPN" class="thumbnail" style="width:12%; height:12%">
+            <img src="images/ipn-logo2.png" alt="Logo IPN" style="width:12%; height:12%">
         </a>
         <span style="font-size:0.7em">Instituto Politécnico Nacional</span>
     </div>

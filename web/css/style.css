@@ -43,3 +43,32 @@
     border: 1px solid #ccc;
     border-top: none;
 }
+.img-responsive,.thumbnail>img,.thumbnail a>img,.carousel-inner>.item>img,.carousel-inner>.item>a>img{
+    display:block;max-width:100%;height:auto
+}
+.img-thumbnail{
+    padding:4px;
+    line-height:1.42857143;
+    background-color:#ffffff;
+    border:1px solid #ecf0f1;
+    border-radius:4px;
+    -webkit-transition:all .2s ease-in-out;
+    -o-transition:all .2s ease-in-out;
+    transition:all .2s ease-in-out;
+    display:inline-block;
+    max-width:100%;height:auto
+}
+.thumbnail{
+    display:block;padding:4px;margin-bottom:21px;line-height:1.42857143;background-color:#ffffff;border:1px solid #ecf0f1;border-radius:4px;-webkit-transition:border .2s ease-in-out;-o-transition:border .2s ease-in-out;transition:border .2s ease-in-out
+}
+.thumbnail>img,.thumbnail a>img{
+    margin-left:auto;margin-right:auto
+}
+a.thumbnail:hover,a.thumbnail:focus,a.thumbnail.active{
+    border-color:#18bc9c
+}
+.thumbnail .caption{
+    padding:9px;color:#2c3e50
+}
+.img-thumbnail{max-width:none}
+ 
