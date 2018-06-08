@@ -132,7 +132,5 @@ public class exam {
     public void setId_subject(String id_subject) {
         this.id_subject = id_subject;
     }
-
-    
     
 }

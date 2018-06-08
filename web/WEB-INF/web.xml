@@ -32,6 +32,10 @@
         <servlet-name>servletImages</servlet-name>
         <servlet-class>net.controller.servletImages</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletQuestion</servlet-name>
+        <servlet-class>net.controller.servletQuestion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletABCPlan</servlet-name>
         <url-pattern>/servletABCPlan</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>servletImages</servlet-name>
         <url-pattern>/servletImages</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletQuestion</servlet-name>
+        <url-pattern>/servletQuestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

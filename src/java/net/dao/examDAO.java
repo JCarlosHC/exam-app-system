@@ -8,6 +8,7 @@ import java.util.List;
 import net.model.typeExam;
 import net.model.exam;
 import net.model.examforview;
+import net.model.questionPerExam;
 
 public class examDAO {
     
@@ -186,6 +187,55 @@ public class examDAO {
             ps.setString(1, model.getDescription());
             ps.setInt(2, model.getId());
             ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    //Funcions CRUD preguntas
+    public List<questionPerExam> getQuestions(int id){
+        ArrayList<questionPerExam> lista = new ArrayList<>();
+        String sql = "select p.* from ae_cexapreg ce " +
+                    "inner join ae_creaexa ac on ce.ID_CREAEXA = ac.ID_CREAEXA " +
+                    "inner join ae_preguntas p on p.ID_PREGUNTA = ce.ID_PREGUNTA " +
+                    "where ce.ID_CREAEXA =?";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1, id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                questionPerExam model = new questionPerExam(
+                                        rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+                                        rs.getInt(6), rs.getInt(7));
+                lista.add(model);
+            }
+
+        } catch (SQLException e) {
+            lista = null;
+        }
+        return lista;
+    }
+    public boolean insertOrUpdateQuestion(questionPerExam model, int idexam) {
+        String sql = "call SVURS_CRUDQuestion(?,?,?,?,?,?,?,?)";
+        int id = 0;
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setInt(1, model.getId());
+            ps.setString(2, model.getQuestion());
+            ps.setString(3, model.getCreatDate());
+            ps.setString(4, model.getUnitTemary());
+            ps.setString(5, model.getDischargeDate());
+            ps.setInt(6, model.getIdUser());
+            ps.setInt(7, model.getIdStatus());
+            ps.setInt(8, idexam);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               model.setId(rs.getInt(1));
+            }
             return true;
         } catch (SQLException e) {
             return false;

@@ -58,7 +58,7 @@
     <div class="form-group row">
         <label for="subject" class="col-sm-3 col-form-label">Subject</label>
         <div class="col-sm-9">
-            <select name="subject" class="form-control"">
+            <select name="subject" class="form-control">
                 <%
                     ArrayList<subjects> listsubjects = catalog.getListSubjects();
 
