@@ -53,7 +53,7 @@ public class servletExam extends HttpServlet {
             case "getExam":
                 exam model;
                 if(Integer.parseInt(id) == 0){
-                    model = new exam(0,"","",0,null,null,0,0, 0,0, null);
+                    model = new exam(0,"","",0,null,null,0,0, 0,0, null, null);
                 }else{
                     model = exDao.getExam(Integer.parseInt(id));
                 }
@@ -130,6 +130,7 @@ public class servletExam extends HttpServlet {
                 model.setId_status(1);
                 model.setId_typeExa(Integer.parseInt(typeExam));
                 model.setId_subject(subject);
+                model.setImage("images/no-image.jpg");
                 
                 if (exDao.insertOrUpdate(model)) {
                     msg = "Se guardo correctamente el examen";
@@ -170,5 +171,5 @@ public class servletExam extends HttpServlet {
         response.sendRedirect(url);
 
     }
-
+    
 }
