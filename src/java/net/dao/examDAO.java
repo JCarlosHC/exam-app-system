@@ -19,7 +19,7 @@ public class examDAO {
     
     //Funciones CRUD basic information
     public boolean insertOrUpdate(exam model) {
-        String sql = "call SVURS_CRUDBasicInformation(?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "call SVURS_CRUDBasicInformation(?,?,?,?,?,?,?,?,?,?,?,?)";
         int id = 0;
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
@@ -34,11 +34,24 @@ public class examDAO {
             ps.setInt(9, model.getId_typeExa());
             ps.setString(10, model.getId_subject());
             ps.setString(11, model.getTitle());
+            ps.setString(12, model.getImage());
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                model.setId(rs.getInt(1));
             }
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    public boolean updateImage(exam model) {
+        String sql = "update ae_creaexa set image = ? where id_creaexa = ?";
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, model.getImage());
+            ps.setInt(2, model.getId());
+            ps.executeUpdate();
             return true;
         } catch (SQLException e) {
             return false;
@@ -76,14 +89,14 @@ public class examDAO {
     public List<exam> getAll() {
         ArrayList<exam> lista = new ArrayList<exam>();
         String sql = "SELECT ex.ID_CREAEXA, ex.TITLE, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
-                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA FROM ae_creaexa ex;";
+                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA, ex.IMAGE FROM ae_creaexa ex;";
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
             ResultSet rs = sta.executeQuery();
 
             while (rs.next()) {
                 exam sc = new exam(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6),
-                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11));
+                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getString(12));
                 lista.add(sc);
             }
 
@@ -115,7 +128,7 @@ public class examDAO {
     }
     public exam getExam(int id){
         String sql = "SELECT ex.ID_CREAEXA, ex.TITLE, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
-                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA FROM ae_creaexa ex WHERE ex.ID_CREAEXA=?";
+                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA, ex.IMAGE FROM ae_creaexa ex WHERE ex.ID_CREAEXA=?";
         exam model = new exam();
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
@@ -124,7 +137,7 @@ public class examDAO {
 
             while (rs.next()) {
                 model = new exam(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6),
-                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11));
+                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getString(12));
             }
 
         } catch (SQLException e) {

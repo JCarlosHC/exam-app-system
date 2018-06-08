@@ -47,9 +47,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group">
-                                <a class="btn btn-success" href="servletExam?action=getExam&id=0">
+                                <a class="btn btn-success" data-toggle="modal" data-target="#new">
                                     <i class="fa fa-user-plus"></i> New Exam
-                                </a> 
+                                </a>
                             </div>
                         </div>
                         <div class="row">
@@ -138,7 +138,84 @@
             <a class="scroll-to-top rounded" href="#page-top">
                 <i class="fa fa-angle-up"></i>
             </a>
+              <!-- new modal -->
+            <div class="modal fade" id="new" tabindex="-1" role="dialog" aria-labellebdy="title" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form action="servletExam" method="post">
+                            <div class="modal-header bg-light">
+                                <h5 class="modal-title" id="title">New Exam</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>                    
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <label for="title" class="col-sm-3 col-form-label">Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="title" name="title" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="descriptionExa" class="col-sm-3 col-form-label">Description</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="descriptionExa" name="descriptionExa" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="note" class="col-sm-3 col-form-label">Maximum note</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="note" name="note" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="typeExam" class="col-sm-3 col-form-label">Type exam</label>
+                                    <div class="col-sm-9">
+                                        <select name="typeExam" class="form-control">
+                                            <%
+                                                ConnectionDB cn = new ConnectionDB();
+                                                catalogs catalog = new catalogs(cn);
+                                                ArrayList<typeExam> listTypeUser = catalog.getListTypeExams();
+                                                
+                                                        for (int i = 0; i < listTypeUser.size(); i++) {
+                                                            typeExam c = listTypeUser.get(i);
+                                            %>
+                                            <option value="<%=c.getId()%>"><%=c.getDescription()%></option>
+                                            <%
+                                               }
+                                            %>        
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="subject" class="col-sm-3 col-form-label">Subject</label>
+                                    <div class="col-sm-9">
+                                        <select name="subject" class="form-control">
+                                            <%
+                                                ArrayList<subjects> listsubjects = catalog.getListSubjects();
 
+                                                for (int i = 0; i < listsubjects.size(); i++) {
+                                                    subjects c = listsubjects.get(i);
+                                            %>
+                                            <option value="<%=c.getId()%>"><%=c.getDescription()%></option>
+                                            <%
+                                               }
+                                               cn.disconnect();
+                                            %>        
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-primary" name="btnNew" id="btnNew" value="Save">
+                                <input type="hidden" name="action" value="saveInformationBasic">
+                                <input type="hidden" name="id" value="0">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> 
             <!-- Logout Modal-->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -159,6 +236,7 @@
             </div>
 
             <jsp:include page="MasterPagePanel/Footer.jsp"/>
+            
             <%
             } else {
             %>
@@ -175,6 +253,9 @@
                 </div>
             </div>
             <% }%>
+            
+            
+            
             <!-- Bootstrap core JavaScript-->
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

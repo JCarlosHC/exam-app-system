@@ -21,7 +21,8 @@ public class exam {
         this.id = id;
     }
 
-    public exam(int id, String title, String description, int questions, String creatDate, String dischargeDate, float note, int id_user, int id_status, int id_typeExa, String id_subject) {
+    public exam(int id, String title, String description, int questions, String creatDate, String dischargeDate, 
+            float note, int id_user, int id_status, int id_typeExa, String id_subject, String image) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -33,6 +34,7 @@ public class exam {
         this.id_status = id_status;
         this.id_typeExa = id_typeExa;
         this.id_subject = id_subject;
+        this.image = image;
     }
 
     public int getId() {

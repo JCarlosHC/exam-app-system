@@ -79,33 +79,8 @@
             </select>
         </div>
     </div>
-    <div class="form-group row">
-        <div class="col-md-10">
-            <%  String msg = (String) request.getAttribute("msg");
-                String success = (String) request.getAttribute("success");
-                String classAlert, title, style;
-
-                if (success == null) {
-                    classAlert = "alert alert-danger alert-dismissible";
-                    title = "Warning!";
-                    style = "display:none";
-                } else if (success.equals("true")) {
-                    classAlert = "alert alert-success alert-dismissible";
-                    title = "Success!";
-                    style = "display:block";
-                } else {
-                    classAlert = "alert alert-danger alert-dismissible";
-                    title = "Warning!";
-                    style = "display:block";
-
-                }
-            %>
-            <div class="<%=classAlert%>" style="<%=style%>">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong><%=title%> </strong>${msg}
-            </div>
-        </div>
-        <div class="col-md-2">
+    <div class="row">
+        <div class="col-md-2 offset-md-10">
             <input type="submit" class="btn btn-primary" name="btnNew" id="btnNew" value="Save changes">
         </div>
         <input type="hidden" name="action" value="saveInformationBasic"> <!-- this is insert -->
