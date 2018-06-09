@@ -1,5 +1,7 @@
 package net.model;
 
+import java.util.List;
+
 public class questionPerExam {
     private int id;
     private String question;
@@ -8,6 +10,7 @@ public class questionPerExam {
     private String dischargeDate;
     private int idStatus;
     private int idUser;
+    private List<answersPerQuestion> answer;
 
     public questionPerExam() {
     }
@@ -77,6 +80,13 @@ public class questionPerExam {
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-    
+
+    public List<answersPerQuestion> getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(List<answersPerQuestion> answer) {
+        this.answer = answer;
+    }
     
 }
