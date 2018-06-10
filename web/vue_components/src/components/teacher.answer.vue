@@ -101,7 +101,7 @@ export default {
 
           if (r.msg != null) {
             // Si hay error mostramos mensaje
-            self.newEntry.Error = r.Message;
+            self.newEntry.Error = r.msg;
           } else {
             // En caso de éxito limpiamos todo
             self.newEntry.Answer = "";
@@ -129,7 +129,7 @@ export default {
 
           if (r.msg != null) {
             // Si hay error mostramos mensaje
-            self.newEntry.Error = r.Message;
+            self.newEntry.Error = r.msg;
           } else {
             // En caso de éxito limpiamos todo
             self.newEntry.Answer = "";
@@ -157,7 +157,7 @@ export default {
 
           if (r.msg != null) {
             // Si hay error mostramos mensaje
-            self.newEntry.Error = r.Message;
+            self.newEntry.Error = r.msg;
           } else {
             // En caso de éxito limpiamos todo
             self.newEntry.Answer = "";

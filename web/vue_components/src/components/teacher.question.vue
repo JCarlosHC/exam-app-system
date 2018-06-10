@@ -172,16 +172,22 @@ export default {
       self.loadingEdit = true;
 
       $.post(
-        "/instructor/updateLesson",
-        self.entry,
+        "servletQuestion",
+        {
+            examId: self.id,
+            questionId: self.entry.Id,
+            question: self.entry.Question,
+            unitTemary: self.entry.UnitTemary,
+            action: "saveQuestion"
+        },
         function(r) {
           self.loadingEdit = false;
 
-          if (!r.Response) {
+          if (r.msg != null) {
             // Si hay error mostramos mensaje
-            self.entry.Error = r.Message;
+            self.newEntry.Error = r.msg;
           } else {
-            self.entry.Error = "";
+            self.newEntry.Error = "";
             self.all();
           }
         },
@@ -205,7 +211,7 @@ export default {
 
           if (r.msg != null) {
             // Si hay error mostramos mensaje
-            self.newEntry.Error = r.Message;
+            self.newEntry.Error = r.msg;
           } else {
             // En caso de éxito limpiamos todo
             self.newEntry.Question = "";
@@ -226,9 +232,10 @@ export default {
       self.loading = true;
 
       $.post(
-        "/instructor/deleteLesson",
+        "servletQuestion",
         {
-          id: id
+          questionId: id,
+          action: "deleteQuestion"
         },
         function(r) {
           self.loading = false;

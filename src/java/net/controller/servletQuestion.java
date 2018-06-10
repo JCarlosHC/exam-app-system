@@ -76,6 +76,16 @@ public class servletQuestion extends HttpServlet {
                 }   out.print(objJson);
                 out.flush();
                 break;
+            case "deleteQuestion":
+                objJson = new JSONObject();
+                
+                if (!exDao.deleteQuestion(Integer.parseInt(questionId))) {
+                    objJson.put("success", false);
+                    objJson.put("msg", "Ocurrio un error, la pregunta no fue eliminada");
+                }   
+                out.print(objJson);
+                out.flush();
+                break;
             case "getAnswers":
                 answers = new JSONArray(exDao.getAnswers(Integer.parseInt(questionId)));
                 objJson = new JSONObject();

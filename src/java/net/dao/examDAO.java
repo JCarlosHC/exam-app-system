@@ -200,7 +200,7 @@ public class examDAO {
         String sql = "select p.* from ae_cexapreg ce " +
                     "inner join ae_creaexa ac on ce.ID_CREAEXA = ac.ID_CREAEXA " +
                     "inner join ae_preguntas p on p.ID_PREGUNTA = ce.ID_PREGUNTA " +
-                    "where ce.ID_CREAEXA =?";
+                    "where ce.ID_CREAEXA =? and p.ID_ESTATUS = 1";
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
             sta.setInt(1, id);
@@ -240,6 +240,56 @@ public class examDAO {
         }
         return model;
     }
+    public boolean insertOrUpdateQuestion(questionPerExam model, int idexam) {
+        String sql = "call SVURS_CRUDQuestion(?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setInt(1, model.getId());
+            ps.setString(2, model.getQuestion());
+            ps.setString(3, model.getCreatDate());
+            ps.setString(4, model.getUnitTemary());
+            ps.setString(5, model.getDischargeDate());
+            ps.setInt(6, model.getIdUser());
+            ps.setInt(7, model.getIdStatus());
+            ps.setInt(8, idexam);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               model.setId(rs.getInt(1));
+            }
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    public boolean deleteQuestion(int id){
+        String sql = "call SVURS_CRUDQuestion(?,?,?,?,?,?,?,?)";
+        questionPerExam model = this.getQuestion(id);
+        model.setIdStatus(0);
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setInt(1, model.getId());
+            ps.setString(2, model.getQuestion());
+            ps.setString(3, model.getCreatDate());
+            ps.setString(4, model.getUnitTemary());
+            ps.setString(5, model.getDischargeDate());
+            ps.setInt(6, model.getIdUser());
+            ps.setInt(7, model.getIdStatus());
+            ps.setInt(8, 0);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               model.setId(rs.getInt(1));
+            }
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }        
+    }
+    
+    //Funciones CRUD respuestas
     public List<answersPerQuestion> getAnswers(int id){
         ArrayList<answersPerQuestion> lista = new ArrayList<>();
         String sql = "select*from ae_respuestas where ID_PREGUNTA =? AND ID_ESTATUSRESP IN(0,1)";
@@ -278,29 +328,6 @@ public class examDAO {
             model = null;
         }
         return model;
-    }
-    public boolean insertOrUpdateQuestion(questionPerExam model, int idexam) {
-        String sql = "call SVURS_CRUDQuestion(?,?,?,?,?,?,?,?)";
-        try {
-            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
-            ps.setInt(1, model.getId());
-            ps.setString(2, model.getQuestion());
-            ps.setString(3, model.getCreatDate());
-            ps.setString(4, model.getUnitTemary());
-            ps.setString(5, model.getDischargeDate());
-            ps.setInt(6, model.getIdUser());
-            ps.setInt(7, model.getIdStatus());
-            ps.setInt(8, idexam);
-            
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-               model.setId(rs.getInt(1));
-            }
-            return true;
-        } catch (SQLException e) {
-            return false;
-        }
     }
     public boolean insertOrUpdateAnswer(answersPerQuestion model) {
         String sql = "call SVURS_CRUDAnswer(?,?,?,?)";
