@@ -4,21 +4,27 @@
         <!-- Lessons List -->
         <ul v-if="!loading" class="list-group">
             <!-- Listado de las lecciones creadas -->
-            <li v-for="item in answers" class="list-group-item">
+            <li v-for="(item, index) in answersList" :key="index" class="list-group-item">
                 <div class="input-group">
-                    <input type="text" class="form-control" :value="item.answer" readonly>
+                    <input type="text" class="form-control" v-model="item.answer" v-bind:disabled="!item.isEditable">
                     <span class="input-group-btn">
-                    <button @click="remove(item.id)" class="btn btn-danger" type="button" title="Delete">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                    <span class="input-group-btn">
-                        <button v-if="item.status == 0" @click="changeStatus(item.id, item.status)" class="btn btn-danger" type="button" title="change status">
-                            <i class="fa fa-times-circle bg-danger"></i>
+                        <button @click="remove(item.id)" class="btn btn-danger" type="button" title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        <button v-if="item.status == 0" @click="changeStatus(item.id, item.status)" class="btn btn-warning" type="button" title="change status">
+                            <i class="fa fa-times-circle"></i>
                         </button>
                         <button v-else @click="changeStatus(item.id, item.status)" class="btn btn-success" type="button" title="Change status">
-                            <i class="fa fa-check-circle bg-success"></i>
+                            <i class="fa fa-check-circle"></i>
+                        </button>
+                        <button v-if="!item.isEditable" @click="item.isEditable = true" class="btn btn-info" type="button" title="Edit">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button v-else @click="update(item.id, item.answer)" class="btn btn-info" type="button" title="Save">
+                            <i class="fa fa-save"></i>
                         </button>
                     </span>
+                    
                 </div>
             </li>
              <!-- Nuevas Respuestas -->
@@ -62,16 +68,11 @@ export default {
         Answer: "",
         Error: ""
       },
-      entry: {
-        Id: 0,
-        Answer: "",
-        IdStatus: 0,
-        Error: ""
-      }
+      answersList: []
     };
   },
   mounted() {
-    
+    this.answersList = this.answers;
   },
   updated() {
     // Desde aqui podemos ejecutar plugins de jQuery
@@ -105,7 +106,7 @@ export default {
             // En caso de éxito limpiamos todo
             self.newEntry.Answer = "";
             self.newEntry.Error = "";
-            self.answers = r.answers;
+            self.answersList = r.answers;
           }
         },
         "json"
@@ -133,7 +134,35 @@ export default {
             // En caso de éxito limpiamos todo
             self.newEntry.Answer = "";
             self.newEntry.Error = "";
-            self.answers = r.answers;
+            self.answersList = r.answers;
+          }
+        },
+        "json"
+      );
+    },
+    update(id, answerp) {
+      var self = this;
+      self.loading = true;
+      
+      $.post(
+        "servletQuestion",
+        {
+          questionId: self.questionId,
+          answerId: id,
+          action: "saveAnswer",
+          answer: answerp
+        },
+        function(r) {
+          self.loading = false;
+
+          if (r.msg != null) {
+            // Si hay error mostramos mensaje
+            self.newEntry.Error = r.Message;
+          } else {
+            // En caso de éxito limpiamos todo
+            self.newEntry.Answer = "";
+            self.newEntry.Error = "";
+            self.answersList = r.answers;
           }
         },
         "json"
@@ -148,13 +177,15 @@ export default {
       self.loading = true;
 
       $.post(
-        "/instructor/deleteLesson",
+        "servletQuestion",
         {
-          id: id
+            questionId: self.questionId,
+            answerId: id,
+            action: "deleteAnswer"
         },
         function(r) {
           self.loading = false;
-          self.all();
+          self.answersList = r.answers;
         },
         "json"
       );

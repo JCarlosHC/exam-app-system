@@ -119,6 +119,18 @@ public class servletQuestion extends HttpServlet {
                 objJson.put("answers", answers);
                 out.print(objJson);
                 out.flush();
+                break;     
+            case "deleteAnswer":
+                objJson = new JSONObject();
+                
+                if (!exDao.deleteAnswer(Integer.parseInt(answerId))) {
+                    objJson.put("success", false);
+                    objJson.put("msg", "Ocurrio un error, la respuesta no fue eliminada");
+                }   
+                answers = new JSONArray(exDao.getAnswers(Integer.parseInt(questionId)));
+                objJson.put("answers", answers);
+                out.print(objJson);
+                out.flush();
                 break;
             default:
                 break;

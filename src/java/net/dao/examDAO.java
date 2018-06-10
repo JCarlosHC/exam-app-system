@@ -242,7 +242,7 @@ public class examDAO {
     }
     public List<answersPerQuestion> getAnswers(int id){
         ArrayList<answersPerQuestion> lista = new ArrayList<>();
-        String sql = "select*from ae_respuestas where ID_PREGUNTA =?";
+        String sql = "select*from ae_respuestas where ID_PREGUNTA =? AND ID_ESTATUSRESP IN(0,1)";
         
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
@@ -250,8 +250,8 @@ public class examDAO {
             ResultSet rs = sta.executeQuery();
 
             while (rs.next()) {
-                answersPerQuestion model = new answersPerQuestion(rs.getInt("ID_RESPUESTA"), 
-                                        rs.getInt("ID_PREGUNTA"), rs.getString("RESPUESTA"), rs.getInt("ID_ESTATUSRESP"));
+                answersPerQuestion model = new answersPerQuestion(rs.getInt("ID_RESPUESTA"), rs.getInt("ID_PREGUNTA"), 
+                        rs.getString("RESPUESTA"), rs.getInt("ID_ESTATUSRESP"), false);
                 lista.add(model);
             }
 
@@ -271,7 +271,7 @@ public class examDAO {
 
             while (rs.next()) {
                 model = new answersPerQuestion(rs.getInt("ID_RESPUESTA"),rs.getInt("ID_PREGUNTA"), 
-                                            rs.getString("RESPUESTA"), rs.getInt("ID_ESTATUSRESP"));
+                                            rs.getString("RESPUESTA"), rs.getInt("ID_ESTATUSRESP"), false);
             }
 
         } catch (SQLException e) {
@@ -333,5 +333,31 @@ public class examDAO {
         } catch (SQLException e) {
             return false;
         }
+    }
+    public boolean deleteAnswer(int id){
+        String sql = "call SVURS_CRUDAnswer(?,?,?,?)";
+        answersPerQuestion model = this.getAnswer(id);
+        
+        if(model.getStatus() == 0){
+            model.setStatus(2);
+        }else{
+            model.setStatus(3);
+        }
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setInt(1, model.getId());
+            ps.setString(2, model.getAnswer());
+            ps.setInt(3, model.getStatus());
+            ps.setInt(4, model.getIdQuestion());
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               model.setId(rs.getInt(1));
+            }
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }        
     }
 }

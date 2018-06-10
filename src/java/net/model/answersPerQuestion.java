@@ -5,15 +5,17 @@ public class answersPerQuestion {
     private int idQuestion;
     private String answer;
     private int status;
+    private Boolean isEditable;
 
     public answersPerQuestion() {
     }
 
-    public answersPerQuestion(int id, int idQuestion, String answer, int status) {
+    public answersPerQuestion(int id, int idQuestion, String answer, int status, Boolean edit) {
         this.id = id;
         this.idQuestion = idQuestion;
         this.answer = answer;
         this.status = status;
+        this.isEditable = edit;
     }
 
     public int getId() {
@@ -46,6 +48,14 @@ public class answersPerQuestion {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Boolean getIsEditable() {
+        return isEditable;
+    }
+
+    public void setIsEditable(Boolean isEditable) {
+        this.isEditable = isEditable;
     }
     
 }
