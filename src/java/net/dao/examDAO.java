@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import net.model.answersPerQuestion;
 import net.model.typeExam;
 import net.model.exam;
 import net.model.examforview;
@@ -217,9 +218,69 @@ public class examDAO {
         }
         return lista;
     }
+    public questionPerExam getQuestion(int id){
+        questionPerExam model = null;
+        
+        String sql = "select * from ae_preguntas " +
+                    "where ID_PREGUNTA =?";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1, id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                model = new questionPerExam(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), 
+                        rs.getString(5),rs.getInt(6), rs.getInt(7));
+            }
+            List<answersPerQuestion> answers = this.getAnswers(id);
+            model.setAnswers(answers);
+            
+        } catch (SQLException e) {
+            model = null;
+        }
+        return model;
+    }
+    public List<answersPerQuestion> getAnswers(int id){
+        ArrayList<answersPerQuestion> lista = new ArrayList<>();
+        String sql = "select*from ae_respuestas where ID_PREGUNTA =?";
+        
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1, id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                answersPerQuestion model = new answersPerQuestion(rs.getInt("ID_RESPUESTA"), 
+                                        rs.getInt("ID_PREGUNTA"), rs.getString("RESPUESTA"), rs.getInt("ID_ESTATUSRESP"));
+                lista.add(model);
+            }
+
+        } catch (SQLException e) {
+            lista = null;
+        }
+        return lista;
+    }
+    public answersPerQuestion getAnswer(int id){
+        answersPerQuestion model = null;
+        String sql = "select * from ae_respuestas " +
+                    "where ID_RESPUESTA =?";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1, id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                model = new answersPerQuestion(rs.getInt("ID_RESPUESTA"),rs.getInt("ID_PREGUNTA"), 
+                                            rs.getString("RESPUESTA"), rs.getInt("ID_ESTATUSRESP"));
+            }
+
+        } catch (SQLException e) {
+            model = null;
+        }
+        return model;
+    }
     public boolean insertOrUpdateQuestion(questionPerExam model, int idexam) {
         String sql = "call SVURS_CRUDQuestion(?,?,?,?,?,?,?,?)";
-        int id = 0;
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
             ps.setInt(1, model.getId());
@@ -236,6 +297,38 @@ public class examDAO {
             while (rs.next()) {
                model.setId(rs.getInt(1));
             }
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    public boolean insertOrUpdateAnswer(answersPerQuestion model) {
+        String sql = "call SVURS_CRUDAnswer(?,?,?,?)";
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setInt(1, model.getId());
+            ps.setString(2, model.getAnswer());
+            ps.setInt(3, model.getStatus());
+            ps.setInt(4, model.getIdQuestion());
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               model.setId(rs.getInt(1));
+            }
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    public boolean changeAnswer(answersPerQuestion model) {
+        String sql = "update ae_respuestas set ID_ESTATUSRESP = ? where ID_PREGUNTA = ? and ID_RESPUESTA = ?;";
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setInt(1, model.getStatus());
+            ps.setInt(2, model.getIdQuestion());
+            ps.setInt(3, model.getId());
+            ps.executeUpdate();
             return true;
         } catch (SQLException e) {
             return false;

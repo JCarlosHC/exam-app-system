@@ -10,7 +10,7 @@ public class questionPerExam {
     private String dischargeDate;
     private int idStatus;
     private int idUser;
-    private List<answersPerQuestion> answer;
+    private List<answersPerQuestion> answers;
 
     public questionPerExam() {
     }
@@ -82,11 +82,11 @@ public class questionPerExam {
     }
 
     public List<answersPerQuestion> getAnswer() {
-        return answer;
+        return answers;
     }
 
-    public void setAnswer(List<answersPerQuestion> answer) {
-        this.answer = answer;
+    public void setAnswers(List<answersPerQuestion> answers) {
+        this.answers = answers;
     }
     
 }

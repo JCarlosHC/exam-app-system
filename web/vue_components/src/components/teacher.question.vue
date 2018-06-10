@@ -8,17 +8,17 @@
         <div class="input-group">
             <input type="text" class="form-control" :value="item.question" readonly>
             <span class="input-group-btn">
-            <button @click="remove(item.Id)" class="btn btn-danger" type="button" title="Delete">
+            <button @click="remove(item.id)" class="btn btn-danger" type="button" title="Delete">
                 <i class="fa fa-trash"></i>
             </button>
-            <button @click="get(item.Id)" type="button" data-toggle="modal" data-target="#question-edit" class="btn btn-default" title="Edit">
+            <button @click="get(item.id)" type="button" data-toggle="modal" data-target="#question-edit" class="btn btn-default" title="Edit">
                 <i class="fa fa-edit"></i>
             </button>
             </span>
         </div>
     </li>
 
-    <!-- Nuevas lecciones -->
+    <!-- Nuevas Preguntas -->
     <li class="list-group-item">
         <div v-if="newEntry.Error.length > 0" class="alert alert-danger">{{ newEntry.Error }}</div>
         <div class="input-group">
@@ -37,31 +37,26 @@
       <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel">Question</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Lección #1</h4>
               </div>
               <div class="modal-body">
                 <div v-if="entry.Error.length > 0" class="alert alert-danger">{{ entry.Error }}</div>
                 <loader v-if="loadingEdit" height="200"></loader>
                 <div v-if="!loadingEdit">
                   <div class="form-group">
-                      <label>Name <span class="text-danger">*</span></label>
-                      <input v-model="entry.Name" type="text" name="Name" class="form-control" value="Lesson #1" />
+                      <label>Question <span class="text-danger">*</span></label>
+                      <input v-model="entry.Question" type="text" name="Question" class="form-control" value="Question #1" />
                   </div>
-
-                  <!-- Un pequeño hack para resolver esto -->
                   <div class="form-group">
-                      <label>Content <span class="required">*</span></label>
-                      <textarea id="wysiwyg" name="Content" class="form-control">{{ entry.Content }}</textarea>
-                      <input id="wysiwygHidden" type="hidden" v-model="entry.Content" />
+                      <label>Unidad de temario<small>[Opcional]</small></label>
+                      <input v-model="entry.UnitTemary" type="text" name="Unidad de temario" class="form-control" />
+                      <small>Enter the unit of temary</small>
                   </div>
-
-                  <div class="form-group">
-                      <label>Video <small>[Opcional]</small></label>
-                      <input v-model="entry.Video" type="text" name="Video" class="form-control" />
-                      <small>Enter the code of your video</small>
+                  <div style="min-height:300px;">
+                      <label>Answers</label>
+                      <answerquestion :answers="entry.Answers" :questionId="entry.Id"></answerquestion>
                   </div>
-
                   <div class="text-right">
                       <button @click="update" type="button" class="btn btn-default">
                           Save
@@ -77,11 +72,13 @@
 
 <script>
 import loader from "./global.loader.vue";
+import answerquestion from "./teacher.answer.vue";
 
 export default {
   name: "teacherquestion",
   components: {
-    loader
+    loader,
+    answerquestion
   },
   props: {
     id: {
@@ -99,10 +96,13 @@ export default {
       },
       entry: {
         Id: 0,
-        Name: "",
-        Content: "",
-        Video: "",
-        Order: 0,
+        Question: "",
+        CreatDate: "",
+        UnitTemary: "",
+        DischargeDate: "",
+        IdStatus: 0,
+        IdUser: 0,
+        Answers: [],
         Error: ""
       },
       questions: []
@@ -114,13 +114,13 @@ export default {
   updated() {
     // Desde aqui podemos ejecutar plugins de jQuery
     var self = this;
-
+    /*
     $("#wysiwyg").trumbowyg();
 
     // Pequeño hack para setear el valor manualmente
     $("#wysiwyg").on("tbwblur", function() {
       self.entry.Content = $(this).val();
-    });
+    });*/
   },
   computed: {},
   methods: {
@@ -148,14 +148,18 @@ export default {
       $.post(
         "servletQuestion",
         {
-          id: id,
+          questionId: id,
           action: "getQuestion"
         },
         function(r) {
-          self.entry.Id = r.Id;
-          self.entry.Name = r.Name;
-          self.entry.Content = r.Content;
-          self.entry.Video = r.Video;
+          self.entry.Id = r.id;
+          self.entry.Question = r.question;
+          self.entry.CreatDate = r.creatDate;
+          self.entry.UnitTemary = r.unitTemary;
+          self.entry.DischargeDate = r.dischargeDate;
+          self.entry.IdStatus = r.idStatus;
+          self.entry.IdUser = r.idUser;
+          self.entry.Answers = r.answer;
           self.entry.Error = "";
 
           self.loadingEdit = false;
