@@ -104,6 +104,33 @@ $(document).ready(function () {
         modal.find('.modal-body #description').val(recipient1);
     });
     
+    // User
+    $('#editStudent').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var recipient0 = button.data('id');
+        var recipient1 = button.data('firstname');
+        var recipient2 = button.data('pname');
+        var recipient3 = button.data('mname');
+        var recipient4 = button.data('email');
+        var recipient5 = button.data('phone');
+        var recipient6 = button.data('idplan');
+        var recipient7 = button.data('idschool');
+        var recipient8 = button.data('idcareer');
+        
+        
+        var modal = $(this);
+        modal.find('.modal-body #id').val(recipient0);
+        modal.find('.modal-body #firstname').val(recipient1);
+        modal.find('.modal-body #psurname').val(recipient2);
+        modal.find('.modal-body #msurname').val(recipient3);
+        modal.find('.modal-body #email').val(recipient4);
+        modal.find('.modal-body #phone').val(recipient5);
+        modal.find('.modal-body #planest').val(recipient6);
+        modal.find('.modal-body #escuela').val(recipient7);
+        modal.find('.modal-body #carrera').val(recipient8);
+    });
+    
+    
 });
 
 

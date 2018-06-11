@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/src/java/net/dao/examDAO.java</file>
-            <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/web/planEstudio.jsp</file>
             <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/web/exam.jsp</file>
-            <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/web/exam/_image.jsp</file>
-            <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/src/java/net/controller/servletExam.java</file>
+            <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/src/java/net/controller/servletQuestion.java</file>
             <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/web/exam/_questions.jsp</file>
-            <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/src/java/net/model/exam.java</file>
-            <file>file:/E:/My%20projects/Exam-Application-System/Exam-Application-System/web/js/utils.js</file>
         </group>
     </open-files>
 </project-private>

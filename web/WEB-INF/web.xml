@@ -36,6 +36,14 @@
         <servlet-name>servletQuestion</servlet-name>
         <servlet-class>net.controller.servletQuestion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletStudent</servlet-name>
+        <servlet-class>net.controller.servletStudent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletSecretary</servlet-name>
+        <servlet-class>net.controller.servletSecretary</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletABCPlan</servlet-name>
         <url-pattern>/servletABCPlan</url-pattern>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>servletQuestion</servlet-name>
         <url-pattern>/servletQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletStudent</servlet-name>
+        <url-pattern>/servletStudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletSecretary</servlet-name>
+        <url-pattern>/servletSecretary</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

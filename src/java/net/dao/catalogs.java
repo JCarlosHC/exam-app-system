@@ -18,7 +18,7 @@ public class catalogs {
     
     public ArrayList<typeuser> getListTypeUsers(){
         String sql = "select * from ae_tipousuario";   
-        ArrayList<typeuser> lista = new ArrayList<typeuser>();
+        ArrayList<typeuser> lista = new ArrayList<>();
         
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);

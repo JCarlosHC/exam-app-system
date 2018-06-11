@@ -83,15 +83,21 @@
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseMulti">
                     <li>
-                        <a href="#">Second Level Item</a>
+                        <a href="servletStudent?action=toList">Mis alumnos</a>
                     </li>
                     <li>
-                        <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-                        <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                        </ul>
+                        <a href="#">Grupos</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Secretarias">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSecretary" data-parent="#exampleAccordion">
+                    <i class="fa fa-graduation-cap"></i>
+                    <span class="nav-link-text">Secretarias</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseSecretary">
+                    <li>
+                        <a href="servletSecretary?action=toList">Mis secretarias</a>
                     </li>
                 </ul>
             </li>

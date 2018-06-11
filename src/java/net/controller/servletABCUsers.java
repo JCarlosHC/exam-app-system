@@ -24,7 +24,7 @@ public class servletABCUsers extends HttpServlet {
         String idType = request.getParameter("idType");
         String msgresult = request.getParameter("msg");
         String success = request.getParameter("success");
-
+        
         String url = "", msg;
         RequestDispatcher rd;
         ConnectionDB cn = new ConnectionDB();
