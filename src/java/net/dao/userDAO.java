@@ -155,4 +155,47 @@ public class userDAO {
             return false;
         }
     }
+    
+    //Secretarias
+    
+    public boolean updateSecretary(user model) {
+        String sql = "UPDATE ae_usuarios SET " +
+                    "NOMBRE=?, APE_PATERNO=?, APE_MATERNO=?, CORREO=?, TELEFONO=? " +
+                    "WHERE ID_USUARIO=?";    
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, model.getFirstname());
+            ps.setString(2, model.getPsurname());
+            ps.setString(3, model.getMsurname());
+            ps.setString(4, model.getEmail());
+            ps.setString(5, model.getPhone());
+            ps.setInt(6, model.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    public List<user> getAllSecretary() {
+        ArrayList<user> lista = new ArrayList<>();
+        String sql = "SELECT u.ID_USUARIO, u.NOMBRE, u.APE_PATERNO,u.APE_MATERNO, u.CORREO, u.TELEFONO, t.ID_TIPOUSUARIO, e.ID_ESTATUS " +
+                    "FROM ae_usuarios u INNER JOIN ae_tipousuario t ON u.ID_TIPOUSUARIO = t.ID_TIPOUSUARIO " +
+                    "INNER JOIN ae_estatus e ON u.ID_ESTATUS = e.ID_ESTATUS WHERE e.DESCRIPCION = 'Activo' AND t.DESCRIPCION = 'Secretaria'";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                user sc = new user(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),
+                        rs.getString(6),rs.getInt(7),rs.getInt(8));
+                lista.add(sc);
+            }
+
+        } catch (SQLException e) {
+            lista = null;
+        }
+        return lista;
+    }
+
+    
 }
