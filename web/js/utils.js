@@ -33,7 +33,7 @@ $(document).ready(function () {
         modal.find('.modal-body #description').val(recipient1);
         modal.find('.modal-body #acronym').val(recipient2);
     });
-    
+
     // Career
     $('#editCareer').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
@@ -47,7 +47,7 @@ $(document).ready(function () {
         modal.find('.modal-body #idCareer').val(recipient0);
         modal.find('.modal-body #description').val(recipient1);
     });
-    
+
     // Subject
     $('#editSubject').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
@@ -61,7 +61,7 @@ $(document).ready(function () {
         modal.find('.modal-body #idSubject').val(recipient0);
         modal.find('.modal-body #description').val(recipient1);
     });
-    
+
     // User
     $('#editUser').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
@@ -81,29 +81,29 @@ $(document).ready(function () {
         modal.find('.modal-body #phone').val(recipient5);
         modal.find('.modal-body #typeuser').val(recipient6);
     });
-    
+
     // Type user
     $('#editType').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var recipient0 = button.data('id');
         var recipient1 = button.data('description');
-        
+
         var modal = $(this);
         modal.find('.modal-body #idType').val(recipient0);
         modal.find('.modal-body #description').val(recipient1);
     });
-    
+
     // Type exam
     $('#editTypeExam').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var recipient0 = button.data('id');
         var recipient1 = button.data('description');
-        
+
         var modal = $(this);
         modal.find('.modal-body #idType').val(recipient0);
         modal.find('.modal-body #description').val(recipient1);
     });
-    
+
     // Student
     $('#editStudent').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
@@ -116,8 +116,8 @@ $(document).ready(function () {
         var recipient6 = button.data('idplan');
         var recipient7 = button.data('idschool');
         var recipient8 = button.data('idcareer');
-        
-        
+
+
         var modal = $(this);
         modal.find('.modal-body #id').val(recipient0);
         modal.find('.modal-body #firstname').val(recipient1);
@@ -129,7 +129,7 @@ $(document).ready(function () {
         modal.find('.modal-body #escuela').val(recipient7);
         modal.find('.modal-body #carrera').val(recipient8);
     });
-    
+
     // User
     $('#editSecretary').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal

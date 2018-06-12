@@ -229,7 +229,7 @@
                                         <div class="col-md-4">
                                             <label for="phone">Phone</label>
                                             <input type="tel" class="form-control" id="phone" name="phone" required>
-                                        </div
+                                        </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="id" id="id" value="">

@@ -83,10 +83,13 @@
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseMulti">
                     <li>
-                        <a href="servletStudent?action=toList">Mis alumnos</a>
+                        <a href="servletStudent?action=toList">Lista alumnos</a>
                     </li>
                     <li>
-                        <a href="#">Grupos</a>
+                        <a href="servletSecuencia?action=toList">Listar secuencias</a>
+                    </li>
+                    <li>
+                        <a href="servletSecuencia?action=mySecuencias">Mis secuencias</a>
                     </li>
                 </ul>
             </li>
