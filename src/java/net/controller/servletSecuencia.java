@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.dao.ConnectionDB;
+import net.dao.examDAO;
 import net.dao.secuenciaDAO;
 import net.model.secuencia;
 import net.model.studentsPerSecuencia;
@@ -82,12 +83,13 @@ public class servletSecuencia extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         JSONObject objJson;
-        JSONArray students;
+        JSONArray students, secuencias;
         PrintWriter out = response.getWriter();
 
         String action = request.getParameter("action");
         String id = request.getParameter("id");
         String idstudent = request.getParameter("idstudent");
+        String idsecuencia = request.getParameter("idsecuencia");
         String subject = request.getParameter("subject");
         String description = request.getParameter("description");
         int user = (int) request.getSession().getAttribute("IdtableUser");
@@ -95,6 +97,7 @@ public class servletSecuencia extends HttpServlet {
         String url = "", msg = "";
         ConnectionDB cn = new ConnectionDB();
         secuenciaDAO secDao = new secuenciaDAO(cn);
+        examDAO exDao = new examDAO(cn);
         secuencia model = new secuencia();
         studentsPerSecuencia modela;
 
@@ -169,6 +172,26 @@ public class servletSecuencia extends HttpServlet {
                 objJson.put("studentsResp", students);
                 out.print(objJson);
                 out.flush();
+                break;
+            case "addSecuencia":
+                objJson = new JSONObject();
+                
+                if(!exDao.insertSecuenciaPerExam(Integer.parseInt(id), idsecuencia)){
+                    objJson.put("id", idsecuencia);
+                    objJson.put("success", false);
+                    objJson.put("msg", "Ocurrio un error, la secuencia no fue asignada al examen");
+                }
+                secuencias = new JSONArray(exDao.getSecuenciasPerExam(Integer.parseInt(id)));
+                objJson.put("secuencias", secuencias);
+                out.print(objJson);
+                out.flush();                
+                break;
+            case "getSecuenciasPerExam":
+                objJson = new JSONObject();
+                secuencias = new JSONArray(exDao.getSecuenciasPerExam(Integer.parseInt(id)));
+                objJson.put("secuencias", secuencias);
+                out.print(objJson);
+                out.flush();  
                 break;
             default:
                 break;

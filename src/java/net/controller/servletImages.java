@@ -110,7 +110,7 @@ public class servletImages extends HttpServlet {
             } else {
                 msg = "Ocurrio un error, la imagen no fue guardada";
                 success = "false";
-                modelresp = new exam(0,"","",0,null,null,0,0, 0,0, null, null);
+                modelresp = new exam(0,"","",0,null,null,0,0, 0,0, null);
                 url = "exam.jsp";
             }
             request.setAttribute("msg", msg);

@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="net.model.secuencia"%>
+<%@page import="net.dao.secuenciaDAO"%>
 <%@page import="net.model.exam"%>
 <%@page import="net.model.subjects"%>
 <%@page import="net.model.typeExam"%>
@@ -11,7 +14,7 @@
     <%
         exam model = (exam) request.getAttribute("myExam");
     %>
-    <input type="hidden" name="id" value="<%=model.getId()%>">
+    <input type="hidden" name="id" id="id" value="<%=model.getId()%>">
     <div class="form-group row">
         <label for="title" class="col-sm-3 col-form-label">Title</label>
         <div class="col-sm-9">
@@ -41,48 +44,56 @@
 
                     for (int i = 0; i < listTypeExam.size(); i++) {
                         typeExam c = listTypeExam.get(i);
-                        if(model.getId_typeExa() == c.getId()) {
-                        %>
-                        <option value="<%=c.getId()%>" selected="true"><%=c.getDescription()%></option>
-                        <%
-                                }else{
-                        %>
-                        <option value="<%=c.getId()%>"><%=c.getDescription()%></option>
-                        <%
-                                }
-                            }
-                        %>        
-            </select>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="subject" class="col-sm-3 col-form-label">Subject</label>
-        <div class="col-sm-9">
-            <select name="subject" class="form-control">
-                <%
-                    ArrayList<subjects> listsubjects = catalog.getListSubjects();
-
-                    for (int i = 0; i < listsubjects.size(); i++) {
-                        subjects c = listsubjects.get(i);
-                        if(c.getId().equals(model.getId_subject())){
+                        if (model.getId_typeExa() == c.getId()) {
                 %>
                 <option value="<%=c.getId()%>" selected="true"><%=c.getDescription()%></option>
                 <%
-                        }else{
+                } else {
                 %>
                 <option value="<%=c.getId()%>"><%=c.getDescription()%></option>
                 <%
                         }
                     }
-                    cn.disconnect();
                 %>        
             </select>
         </div>
     </div>
+    <div class="form-group row">
+        <label for="selectsecuencia" class="col-sm-3 col-form-label">Secuencias</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <select name="selectsecuencia" id="selectsecuencia" class="form-control">
+                    <%
+                        secuenciaDAO secdao = new secuenciaDAO(cn);
+                        int id = (int) session.getAttribute("IdtableUser");
+                        List<secuencia> listsecuencias = secdao.getMisSecuencias(id);
+
+                        for (int i = 0; i < listsecuencias.size(); i++) {
+                            secuencia c = listsecuencias.get(i);
+                    %>
+                    <option value="<%=c.getId()%>"><%=c.getId()%></option>
+                    <%
+                        }
+                        cn.disconnect();
+                    %>        
+                </select>
+                <span class="input-group-btn">
+                    <button id="btnloadSecuencias" class="btn btn-primary" type="button" visible="false" hidden="hidden">
+                    </button>
+                    <button id="btnAddSecuencia" class="btn btn-primary" type="button" title="Insert">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </span>
+            </div>
+
+        </div>
+    </div>
+    <div id="secuenciasperexam"></div>
     <div class="row">
-        <div class="col-md-2 offset-md-10">
+        <div class="col-md-10" id="containermsg"></div>
+        <div class="col-md-2">
             <input type="submit" class="btn btn-primary" name="btnNew" id="btnNew" value="Save changes">
         </div>
-        <input type="hidden" name="action" value="saveInformationBasic"> <!-- this is insert -->
+        <input type="hidden" name="action" value="saveInformationBasic">
     </div>
 </form>

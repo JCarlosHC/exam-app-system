@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    
     //Plan de estudio
     $('#editPlan').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
@@ -147,7 +147,36 @@ $(document).ready(function () {
         modal.find('.modal-body #email').val(recipient4);
         modal.find('.modal-body #phone').val(recipient5);
     });
-    
+
+    //Click para agregar secuencia
+    $('#btnAddSecuencia').click(function () {
+        var idsec = $("#selectsecuencia").val();
+        var idexa = $("#id").val();
+        $.ajax({
+            type: 'Post',
+            url: 'servletSecuencia',
+            data: {id: idexa, idsecuencia: idsec, action: "addSecuencia"},
+            success: function (result) {
+                var lista = '<ul class="list-inline">';
+                var sec = '';
+
+                if (result.msg != null) {
+                    $('#containermsg').html('<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                            '<strong>Error </strong>' + result.msg + '</div>');
+                }
+                sec = '';
+                $.each(result.secuencias, function (i, item) {
+                    sec += '<li class="list-inline-item"><div class="input-group"><input type="text" class="form-control"' + 'value=' + item.idsecuencia + ' readonly>';
+                    sec += '<span class="input-group-btn"><a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a></span></div></li>';
+                });
+                lista += sec;
+                lista += "</ul>";
+                $('#secuenciasperexam').html(lista);
+            }
+        });
+
+    });
+
 });
 
 

@@ -9,6 +9,7 @@ import net.model.answersPerQuestion;
 import net.model.typeExam;
 import net.model.exam;
 import net.model.examforview;
+import net.model.examsPerSecuencia;
 import net.model.questionPerExam;
 
 public class examDAO {
@@ -21,8 +22,7 @@ public class examDAO {
     
     //Funciones CRUD basic information
     public boolean insertOrUpdate(exam model) {
-        String sql = "call SVURS_CRUDBasicInformation(?,?,?,?,?,?,?,?,?,?,?,?)";
-        int id = 0;
+        String sql = "call SVURS_CRUDBasicInformation(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
             ps.setInt(1, model.getId());
@@ -34,9 +34,8 @@ public class examDAO {
             ps.setInt(7, model.getId_user());
             ps.setInt(8, model.getId_status());
             ps.setInt(9, model.getId_typeExa());
-            ps.setString(10, model.getId_subject());
-            ps.setString(11, model.getTitle());
-            ps.setString(12, model.getImage());
+            ps.setString(10, model.getTitle());
+            ps.setString(11, model.getImage());
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -72,7 +71,7 @@ public class examDAO {
     }
     public boolean update(exam model) {
         String sql = "UPDATE ae_creaexa SET " +
-                    "DESCRIPCION=?, CAL_MAX=?, ID_TIPOEXA=?, ID_MATERIA=? " +
+                    "DESCRIPCION=?, CAL_MAX=?, ID_TIPOEXA=? " +
                     "WHERE ID_CREAEXA=?";    
                 
         try {
@@ -80,8 +79,7 @@ public class examDAO {
             ps.setString(1, model.getDescription());
             ps.setFloat(2, model.getNote());
             ps.setInt(3, model.getId_typeExa());
-            ps.setString(4, model.getId_subject());
-            ps.setInt(5, model.getId());
+            ps.setInt(4, model.getId());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -91,14 +89,14 @@ public class examDAO {
     public List<exam> getAll() {
         ArrayList<exam> lista = new ArrayList<exam>();
         String sql = "SELECT ex.ID_CREAEXA, ex.TITLE, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
-                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA, ex.IMAGE FROM ae_creaexa ex;";
+                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.IMAGE FROM ae_creaexa ex;";
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
             ResultSet rs = sta.executeQuery();
 
             while (rs.next()) {
                 exam sc = new exam(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6),
-                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getString(12));
+                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11));
                 lista.add(sc);
             }
 
@@ -130,7 +128,7 @@ public class examDAO {
     }
     public exam getExam(int id){
         String sql = "SELECT ex.ID_CREAEXA, ex.TITLE, ex.DESCRIPCION, ex.NUM_PREGUNTAS, ex.FECHA_CREACION, ex.FECHA_BAJA, " +
-                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.ID_MATERIA, ex.IMAGE FROM ae_creaexa ex WHERE ex.ID_CREAEXA=?";
+                "ex.CAL_MAX, ex.ID_USUARIO, ex.ID_ESTATUS, ex.ID_TIPOEXA, ex.IMAGE FROM ae_creaexa ex WHERE ex.ID_CREAEXA=?";
         exam model = new exam();
         try {
             PreparedStatement sta = cn.getConnection().prepareStatement(sql);
@@ -139,7 +137,7 @@ public class examDAO {
 
             while (rs.next()) {
                 model = new exam(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6),
-                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getString(12));
+                        rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11));
             }
 
         } catch (SQLException e) {
@@ -386,5 +384,37 @@ public class examDAO {
         } catch (SQLException e) {
             return false;
         }        
+    }
+    
+    public List<examsPerSecuencia> getSecuenciasPerExam(int id) {
+        ArrayList<examsPerSecuencia> lista = new ArrayList<>();
+        String sql = "select ID_SECUENCIA, ID_CREAEXA from ae_examsec where ID_CREAEXA = ?";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1,id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                examsPerSecuencia sc = new examsPerSecuencia(rs.getString(1), rs.getInt(2));
+                lista.add(sc);
+            }
+
+            } catch (SQLException e) {
+            lista = null;
+        }
+        return lista;
+    }
+    public boolean insertSecuenciaPerExam(int idexa, String idsecuencia) {
+        String sql = "INSERT INTO ae_examsec(ID_SECUENCIA, ID_CREAEXA) VALUES(?,?)"; 
+        
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, idsecuencia);
+            ps.setInt(2, idexa);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }

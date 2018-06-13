@@ -53,7 +53,7 @@ public class servletExam extends HttpServlet {
             case "getExam":
                 exam model;
                 if(Integer.parseInt(id) == 0){
-                    model = new exam(0,"","",0,null,null,0,0, 0,0, null, null);
+                    model = new exam(0,"","",0,null,null,0,0, 0,0, null);
                 }else{
                     model = exDao.getExam(Integer.parseInt(id));
                 }
@@ -103,7 +103,6 @@ public class servletExam extends HttpServlet {
         String descriptionE = request.getParameter("descriptionExa");
         String note = request.getParameter("note");
         String typeExam = request.getParameter("typeExam");
-        String subject = request.getParameter("subject");
         int user = (int) request.getSession().getAttribute("IdtableUser");
         //Tipos de usuario
         String idType = request.getParameter("idType");
@@ -129,7 +128,6 @@ public class servletExam extends HttpServlet {
                 model.setId_user(user);
                 model.setId_status(1);
                 model.setId_typeExa(Integer.parseInt(typeExam));
-                model.setId_subject(subject);
                 model.setImage("images/no-image.jpg");
                 
                 if (exDao.insertOrUpdate(model)) {

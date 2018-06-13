@@ -180,7 +180,7 @@
             <script src="js/application.js" type="text/javascript"></script>
             <script src="vue_components/dist/global.components.js" type="text/javascript"></script>
             <script src="vue_components/dist/teacher.components.js" type="text/javascript"></script>
-
+            <script src="js/utils.js" type="text/javascript"></script>
     </body>
 
 </html>

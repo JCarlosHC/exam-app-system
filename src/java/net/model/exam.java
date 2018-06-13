@@ -12,7 +12,6 @@ public class exam {
     private int id_user;
     private int id_status;
     private int id_typeExa;
-    private String id_subject;
    
     public exam() {
     }
@@ -22,7 +21,7 @@ public class exam {
     }
 
     public exam(int id, String title, String description, int questions, String creatDate, String dischargeDate, 
-            float note, int id_user, int id_status, int id_typeExa, String id_subject, String image) {
+            float note, int id_user, int id_status, int id_typeExa, String image) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -33,7 +32,6 @@ public class exam {
         this.id_user = id_user;
         this.id_status = id_status;
         this.id_typeExa = id_typeExa;
-        this.id_subject = id_subject;
         this.image = image;
     }
 
@@ -124,13 +122,4 @@ public class exam {
     public void setId_typeExa(int id_typeExa) {
         this.id_typeExa = id_typeExa;
     }
-
-    public String getId_subject() {
-        return id_subject;
-    }
-
-    public void setId_subject(String id_subject) {
-        this.id_subject = id_subject;
-    }
-    
 }
