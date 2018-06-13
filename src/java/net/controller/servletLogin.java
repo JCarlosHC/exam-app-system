@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.dao.ConnectionDB;
 import net.dao.userDAO;
+import net.model.student;
 import net.model.user;
 
 public class servletLogin extends HttpServlet {
@@ -44,6 +45,7 @@ public class servletLogin extends HttpServlet {
         ConnectionDB cn = new ConnectionDB();
         userDAO usrDao = new userDAO(cn);
         user usr = new user();
+        student stu = new student();
         
         if(action.equals("login")){
             usr = usrDao.validate(usu, pass);
@@ -72,6 +74,17 @@ public class servletLogin extends HttpServlet {
             }
             rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
+        }else if(action.equals("loginstudent")){
+            stu = usrDao.validateStudent(usu, pass);
+            
+            if(stu != null && sesion.getAttribute("userId") == null){
+                sesion.setAttribute("IdtableUser", stu.getId());
+                sesion.setAttribute("userId", stu.getId());
+                sesion.setAttribute("userName", stu.getFirstname());
+                sesion.setAttribute("userEmail", stu.getEmail());
+                sesion.setAttribute("userType", 4);
+            }
+            response.sendRedirect("index.jsp");
         }
         
         cn.disconnect();

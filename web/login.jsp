@@ -15,57 +15,37 @@
     </head>
 
     <body class="bg-dark">
-        <%
-            String msg = (String) request.getAttribute("msg");
 
-            if (msg != null) {
-
-        %>
         <div class="container">
-            <div class="card card-login bg-light mx-auto mt-5">
-                <div class="card-header">Warning</div>
-                <div class="card-body">
-                    <div class="text-center">
-                        <p class="card-text">${msg}</p>
-                        <a class="d-block small mt-3" href="register.jsp">Register an Account</a>
+            <div class="row">
+                <div class="card-columns">
+                    <div class="card mb-3 mt-5">
+                        <a href="loginuser.jsp">
+                            <img class="card-img-top img-fluid w-100" src="images/engineer.jpg" alt="">
+                        </a>
+                        <div class="card-body">
+                            <h6 class="card-title mb-1">I'M ADMINISTRATOR</h6>
+                        </div>
+                    </div>
+                    <div class="card mb-3 mx-auto mt-5">
+                        <a href="loginuser.jsp">
+                            <img class="card-img-top img-fluid w-100" src="images/teacher.jpg" alt="">
+                        </a>
+                        <div class="card-body">
+                            <h6 class="card-title mb-1">I'M TEACHER</h6>
+                        </div>
+                    </div>
+                    <div class="card mb-3 mx-auto mt-5">
+                        <a href="loginstudent.jsp">
+                            <img class="card-img-top img-fluid w-100" src="images/student.jpg" alt="">
+                        </a>
+                        <div class="card-body">
+                            <h6 class="card-title mb-1">I'M STUDENT</h6>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <%} else { %>
-
-        <div class="container">
-            <div class="card card-login mx-auto mt-5">
-                <div class="card-header">Login</div>
-                <div class="card-body">
-                    <form action="servletLogin" method="post">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input class="form-control" id="exampleInputEmail1" name="email" type="email" aria-describedby="emailHelp" required placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input class="form-control" id="exampleInputPassword1" name="password" type="password" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox"> Remember Password</label>
-                            </div>
-                        </div>
-                        <input type="submit" class="btn btn-primary btn-block" name="btnLogin" value="Login">
-                        <input type="hidden" name="action" value="login">
-                    </form>
-                    <div class="text-center">
-                        <a class="d-block small mt-3" href="register.jsp">Register an Account</a>
-                        <a class="d-block small" href="forgot-password.jsp">Forgot Password?</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <% }%>
-
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

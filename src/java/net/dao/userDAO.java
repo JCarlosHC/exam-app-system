@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import net.model.student;
 import net.model.typeuser;
 import net.model.user;
 
@@ -197,5 +198,31 @@ public class userDAO {
         return lista;
     }
 
-    
+    //Students
+    public student validateStudent(String user, String pass) {
+        String sql = "SELECT a.ID_ALUMNO, a.NOMBRE, a.APE_PATERNO, a.APE_MATERNO, a.CORREO, a.TELEFONO, p.ID_PLANEST, " +
+                    "e.ID_ESCUELA, c.ID_CARRERA, s.ID_ESTATUS FROM ae_alumnos a " +
+                    "INNER JOIN ae_planest p ON p.ID_PLANEST = a.ID_PLANEST " +
+                    "INNER JOIN ae_escuelas e ON e.ID_ESCUELA = a.ID_ESCUELA " +
+                    "INNER JOIN ae_carreras c ON c.ID_CARRERA = a.ID_CARRERA " +
+                    "INNER JOIN ae_estatus s ON s.ID_ESTATUS = a.ID_ESTATUS " +
+                    "WHERE s.DESCRIPCION = 'Activo' AND a.ID_ALUMNO = ? AND a.PASSWORD = MD5(?);";    
+        student usuario = null;
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, user);
+            ps.setString(2, pass);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){ 
+                usuario = new student(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),
+                        rs.getString(6),rs.getInt(7),rs.getInt(8), rs.getInt(9), rs.getInt(10));
+            
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return usuario;
+    }
 }
