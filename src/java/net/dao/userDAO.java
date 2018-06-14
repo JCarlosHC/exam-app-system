@@ -67,7 +67,7 @@ public class userDAO {
     }
     public user validate(String user, String pass) {
         String sql = "call SVURS_ValidateUsr(?,?)";    
-        user usuario = new user();
+        user usuario = null;
         try {
             PreparedStatement ps = cn.getConnection().prepareStatement(sql);
             ps.setString(1, user);
@@ -76,6 +76,7 @@ public class userDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                usuario = new user();
                 usuario.setId(rs.getInt(1));
                 usuario.setFirstname(rs.getString(2));
                 usuario.setPsurname(rs.getString(3));
@@ -224,5 +225,33 @@ public class userDAO {
             return null;
         }
         return usuario;
+    }
+    
+    public boolean updatePasswordUser(String password, String user){
+        String sql = "Update ae_usuarios set PASSWORD=MD5(?) where CORREO = ?";   
+        
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setString(2, user);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean updatePasswordStudent(String password, String user){
+        String sql = "Update ae_alumnos set PASSWORD=MD5(?) where ID_ALUMNO = ?";   
+        
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setString(2, user);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }

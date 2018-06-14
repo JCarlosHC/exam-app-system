@@ -40,7 +40,7 @@
                         <a href="#">Mi informacion</a>
                     </li>
                     <li>
-                        <a href="#">Cambiar contraseña</a>
+                        <a href="changePassword.jsp">Cambiar contraseña</a>
                     </li>
                 </ul>
             </li>
