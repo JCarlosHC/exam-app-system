@@ -3,7 +3,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <%
         String user = (String)session.getAttribute("userId");
-
+        int userType = (int)session.getAttribute("userType");
+        
         if(user!=null){
 
     %>
@@ -25,6 +26,27 @@
                     <span class="nav-link-text">Inicio</span>
                 </a>
             </li>
+            
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Mi perfil">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsePerfil" data-parent="#exampleAccordion">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-link-text">Mi perfil</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapsePerfil">
+                    <li>
+                        <a href="#">Examenes asignados</a>
+                    </li>
+                    <li>
+                        <a href="#">Mi informacion</a>
+                    </li>
+                    <li>
+                        <a href="#">Cambiar contraseña</a>
+                    </li>
+                </ul>
+            </li>
+            <%
+            if(userType == 1){
+            %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Planes de estudio">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                     <i class="fa fa-university"></i>
@@ -59,6 +81,9 @@
                     </li>
                 </ul>
             </li>
+            <% } 
+            if(userType == 2 || userType == 3){
+            %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Examenes">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamPages" data-parent="#exampleAccordion">
                     <i class="fa fa-folder-open"></i>
@@ -93,6 +118,10 @@
                     </li>
                 </ul>
             </li>
+            <%  
+               }
+               if(userType == 2){
+            %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Secretarias">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSecretary" data-parent="#exampleAccordion">
                     <i class="fa fa-graduation-cap"></i>
@@ -104,6 +133,7 @@
                     </li>
                 </ul>
             </li>
+            <% } %>
         </ul>
         <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">

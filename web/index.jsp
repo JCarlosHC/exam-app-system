@@ -34,7 +34,7 @@
                     </li>
                     <li class="breadcrumb-item active">My page</li>
                 </ol>
-                <h1>Welcome <span>${sessionScope.userId}</span></h1>
+                <h1>Welcome <span>${sessionScope.userName}</span></h1>
                 
             </div>
             <!-- /.container-fluid-->
