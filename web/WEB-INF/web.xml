@@ -52,6 +52,10 @@
         <servlet-name>servletInformation</servlet-name>
         <servlet-class>net.controller.servletInformation</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletExamUser</servlet-name>
+        <servlet-class>net.controller.servletExamUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletABCPlan</servlet-name>
         <url-pattern>/servletABCPlan</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>servletInformation</servlet-name>
         <url-pattern>/servletInformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletExamUser</servlet-name>
+        <url-pattern>/servletExamUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

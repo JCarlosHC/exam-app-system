@@ -6,6 +6,16 @@
 .exam-report .description {font-size:1.4em;}
 .exam {border-right:1px solid #eee;}
 .exam.last {border-right:none;}
+.examen {border:1px solid #ddd;margin-bottom:15px;padding:15px;background:#fff;}
+.examen:hover {border:1px solid #ddd;}
+.examen:hover {border:1px solid #ccc;}
+.examen .picture {width:100%;height:170px;}
+.examen .title {font-size:1.4em;font-weight:bold;height:50px;display:block;}
+.examen .category {font-size:1em;display:block;color:#222;}
+.examen .teacher {font-size:1em;display:block;color:#222;margin-bottom:10px;}
+.examen .statistics {color:#808080;}
+.examen .description {font-size:.9em;color:#808080;height:80px;font-style:italic;text-align:justify;}
+.examen .price {font-weight:bold;font-size:1.6em;margin-bottom:0;}
 
 /* Style the tab */
 .tab {
@@ -71,4 +81,9 @@ a.thumbnail:hover,a.thumbnail:focus,a.thumbnail.active{
     padding:9px;color:#2c3e50
 }
 .img-thumbnail{max-width:none}
- 
+
+@media (max-width: 992px){
+    .examen .picture{height:auto;}
+    .examen .title{height:auto;}
+    .examen .description{height:auto;}
+}

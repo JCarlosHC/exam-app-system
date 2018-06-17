@@ -78,7 +78,7 @@ public class servletLogin extends HttpServlet {
             stu = usrDao.validateStudent(usu, pass);
             
             if(stu != null && sesion.getAttribute("userId") == null){
-                sesion.setAttribute("IdtableUser", stu.getId());
+                sesion.setAttribute("IdtableUser", 0);
                 sesion.setAttribute("userId", stu.getId());
                 sesion.setAttribute("userName", stu.getFirstname());
                 sesion.setAttribute("userEmail", stu.getEmail());

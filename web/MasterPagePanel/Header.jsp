@@ -2,10 +2,10 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <%
-        String user = (String)session.getAttribute("userId");
-        int userType = (int)session.getAttribute("userType");
-        
-        if(user!=null){
+        String user = (String) session.getAttribute("userId");
+        int userType = (int) session.getAttribute("userType");
+
+        if (user != null) {
 
     %>
     <!--<a class="navbar-brand" href="index.html">Start Bootstrap</a>-->
@@ -26,16 +26,13 @@
                     <span class="nav-link-text">Inicio</span>
                 </a>
             </li>
-            
+
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Mi perfil">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsePerfil" data-parent="#exampleAccordion">
                     <i class="fa fa-user"></i>
                     <span class="nav-link-text">Mi perfil</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapsePerfil">
-                    <li>
-                        <a href="#">Examenes asignados</a>
-                    </li>
                     <li>
                         <a href="#">Mi informacion</a>
                     </li>
@@ -44,8 +41,25 @@
                     </li>
                 </ul>
             </li>
+            <%                if (userType == 4) {
+            %>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Mi perfil">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExams" data-parent="#exampleAccordion">
+                    <i class="fa fa-folder-open"></i>
+                    <span class="nav-link-text">Examenes</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseExams">
+                    <li>
+                        <a href="examsforme.jsp">Examenes asignados</a>
+                    </li>
+                    <li>
+                        <a href="#">Examenes resueltos</a>
+                    </li>
+                </ul>
+            </li>
             <%
-            if(userType == 1){
+                }
+                if (userType == 1) {
             %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Planes de estudio">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
@@ -81,8 +95,8 @@
                     </li>
                 </ul>
             </li>
-            <% } 
-            if(userType == 2 || userType == 3){
+            <% }
+                if (userType == 2 || userType == 3) {
             %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Examenes">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamPages" data-parent="#exampleAccordion">
@@ -118,9 +132,9 @@
                     </li>
                 </ul>
             </li>
-            <%  
-               }
-               if(userType == 2){
+            <%
+                }
+                if (userType == 2) {
             %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Secretarias">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSecretary" data-parent="#exampleAccordion">
@@ -153,5 +167,5 @@
             </li>
         </ul>
     </div>
-    <% } %>
+    <% }%>
 </nav>

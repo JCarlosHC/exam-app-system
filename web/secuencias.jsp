@@ -104,14 +104,6 @@
                                         <td><%=e.getIduser()%></td>
                                         <td><%=e.getDescripcion()%></td>
                                         <td>
-                                            <a data-toggle="modal" data-target="#" class="btn btn-warning"
-                                               data-id="<%=e.getId()%>"
-                                               data-description="<%=e.getDescripcion()%>"
-                                               data-iduser="<%=e.getIduser()%>"
-                                               data-idstatus="<%=e.getIdstatus()%>"
-                                               data-idsubject="<%=e.getIdsubject()%>">
-                                               <span class="fa fa-edit"></span> Edit
-                                            </a>
                                             <a class="btn btn-danger" href="servletSecuencia?action=delete&id=<%=e.getId()%>">
                                                 <span class="fa fa-trash"></span> Delete
                                             </a>		

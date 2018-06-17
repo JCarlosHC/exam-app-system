@@ -1,5 +1,7 @@
 package net.model;
 
+import java.util.List;
+
 public class exam {
     private int id;
     private String title;
@@ -12,7 +14,8 @@ public class exam {
     private int id_user;
     private int id_status;
     private int id_typeExa;
-   
+    private List<questionPerExam> questionsList;
+    
     public exam() {
     }
 
@@ -121,5 +124,13 @@ public class exam {
 
     public void setId_typeExa(int id_typeExa) {
         this.id_typeExa = id_typeExa;
+    }
+
+    public List<questionPerExam> getQuestionsList() {
+        return questionsList;
+    }
+
+    public void setQuestionsList(List<questionPerExam> questionsList) {
+        this.questionsList = questionsList;
     }
 }

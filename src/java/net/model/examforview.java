@@ -9,6 +9,9 @@ public class examforview {
     private float averageMark;
     private int totalStudents;
     private float calMax;
+
+    public examforview() {
+    }
     
     public examforview(int id, String title, String image, String description, String averageTime, float averageMark, int totalStudents, float calMax) {
         this.id = id;
