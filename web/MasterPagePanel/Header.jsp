@@ -53,7 +53,7 @@
                         <a href="examsforme.jsp">Examenes asignados</a>
                     </li>
                     <li>
-                        <a href="#">Examenes resueltos</a>
+                        <a href="servletExamUser?action=getExamsResolved">Examenes resueltos</a>
                     </li>
                 </ul>
             </li>

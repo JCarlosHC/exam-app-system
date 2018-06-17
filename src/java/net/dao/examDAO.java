@@ -550,4 +550,30 @@ public class examDAO {
         }
         return model;
     }
+    
+    public List<aplicationExam> getMyExamsResolved(String iduser) {
+        ArrayList<aplicationExam> lista = new ArrayList<>();
+        String sql = "select ex.ID_CREAEXA, ap.ID_ALUMNO, ap.puntaje, ex.CAL_MAX, ex.NUM_PREGUNTAS, 0 as NUM_PREGUNTASOK, ap.FECHA_INICIO, ap.FECHA_FINAL " +
+                    "from ae_aplicacion ap INNER JOIN ae_creaexa ex ON ap.ID_CREAEXA = ex.ID_CREAEXA " +
+                    "WHERE ap.ID_ALUMNO = ?";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setString(1, iduser);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                aplicationExam sc = new aplicationExam();
+                sc.setIdExam(rs.getInt("ID_CREAEXA"));
+                sc.setNote(rs.getFloat("puntaje"));
+                sc.setNoteExam(rs.getFloat("CAL_MAX"));
+                sc.setNumQuestions(rs.getInt("NUM_PREGUNTAS"));
+                lista.add(sc);
+            }
+
+        } catch (SQLException e) {
+            lista = null;
+        }
+        return lista;
+    }
+
 }

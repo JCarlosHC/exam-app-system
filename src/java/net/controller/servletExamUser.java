@@ -4,6 +4,7 @@ import com.json.JSONArray;
 import com.json.JSONObject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +20,7 @@ public class servletExamUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String userId = (String) request.getSession().getAttribute("userId");
         String id = request.getParameter("id");
         String action = request.getParameter("action");
         String url = "";
@@ -26,7 +28,9 @@ public class servletExamUser extends HttpServlet {
         ConnectionDB cn = new ConnectionDB();
         examDAO exDao = new examDAO(cn);
 
-        if (action.equals("getExam")) {
+        if (action == null) {
+            url = "index.jsp";
+        } else if (action.equals("getExam")) {
             exam model;
             if (Integer.parseInt(id) == 0) {
                 model = new exam(0, "", "", 0, null, null, 0, 0, 0, 0, null);
@@ -35,6 +39,10 @@ public class servletExamUser extends HttpServlet {
             }
             request.setAttribute("myExam", model);
             url = "examUser.jsp";
+        } else if (action.equals("getExamsResolved")) {
+            List<aplicationExam> lista = exDao.getMyExamsResolved(userId);
+            request.setAttribute("lista", lista);
+            url = "examsResolved.jsp";
         }
         cn.disconnect();
         rd = request.getRequestDispatcher(url);
