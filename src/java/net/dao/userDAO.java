@@ -226,7 +226,6 @@ public class userDAO {
         }
         return usuario;
     }
-    
     public boolean updatePasswordUser(String password, String user){
         String sql = "Update ae_usuarios set PASSWORD=MD5(?) where CORREO = ?";   
         
@@ -240,7 +239,6 @@ public class userDAO {
             return false;
         }
     }
-    
     public boolean updatePasswordStudent(String password, String user){
         String sql = "Update ae_alumnos set PASSWORD=MD5(?) where ID_ALUMNO = ?";   
         
@@ -253,5 +251,69 @@ public class userDAO {
         } catch (SQLException e) {
             return false;
         }
+    }
+    public boolean updateStudent(student model) {
+        String sql = "UPDATE ae_alumnos SET " +
+                    "NOMBRE=?, APE_PATERNO=?, APE_MATERNO=?, CORREO=?, TELEFONO=? " +
+                    "WHERE ID_ALUMNO=?";    
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, model.getFirstname());
+            ps.setString(2, model.getPsurname());
+            ps.setString(3, model.getMsurname());
+            ps.setString(4, model.getEmail());
+            ps.setString(5, model.getPhone());
+            ps.setString(6, model.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public user getUser(int id) {
+        user model = null;
+        String sql = "SELECT u.ID_USUARIO, u.NOMBRE, u.APE_PATERNO,u.APE_MATERNO, u.CORREO, u.TELEFONO, t.ID_TIPOUSUARIO, e.ID_ESTATUS " +
+                    "FROM ae_usuarios u INNER JOIN ae_tipousuario t ON u.ID_TIPOUSUARIO = t.ID_TIPOUSUARIO " +
+                    "INNER JOIN ae_estatus e ON u.ID_ESTATUS = e.ID_ESTATUS WHERE e.DESCRIPCION = 'Activo' AND u.ID_USUARIO = ?";
+        try {
+            PreparedStatement sta = cn.getConnection().prepareStatement(sql);
+            sta.setInt(1, id);
+            ResultSet rs = sta.executeQuery();
+
+            while (rs.next()) {
+                model = new user(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),
+                        rs.getString(6),rs.getInt(7),rs.getInt(8));
+            }
+
+        } catch (SQLException e) {
+            model = null;
+        }
+        return model;
+    }
+    public student getStudent(String user) {
+        String sql = "SELECT a.ID_ALUMNO, a.NOMBRE, a.APE_PATERNO, a.APE_MATERNO, a.CORREO, a.TELEFONO, p.ID_PLANEST, " +
+                    "e.ID_ESCUELA, c.ID_CARRERA, s.ID_ESTATUS FROM ae_alumnos a " +
+                    "INNER JOIN ae_planest p ON p.ID_PLANEST = a.ID_PLANEST " +
+                    "INNER JOIN ae_escuelas e ON e.ID_ESCUELA = a.ID_ESCUELA " +
+                    "INNER JOIN ae_carreras c ON c.ID_CARRERA = a.ID_CARRERA " +
+                    "INNER JOIN ae_estatus s ON s.ID_ESTATUS = a.ID_ESTATUS " +
+                    "WHERE s.DESCRIPCION = 'Activo' AND a.ID_ALUMNO = ?";    
+        student usuario = null;
+        try {
+            PreparedStatement ps = cn.getConnection().prepareStatement(sql);
+            ps.setString(1, user);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){ 
+                usuario = new student(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),
+                        rs.getString(6),rs.getInt(7),rs.getInt(8), rs.getInt(9), rs.getInt(10));
+            
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return usuario;
     }
 }

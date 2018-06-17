@@ -86,7 +86,6 @@
                                         <th>User</th>
                                         <th>Status</th>
                                         <th>Type Exam</th>
-                                        <th>Subject</th>
                                         <th>Options <span class="fa fa-wrench"></span></th>
                                     </tr>
                                 </thead>
@@ -102,7 +101,6 @@
                                         <th>User</th>
                                         <th>Status</th>
                                         <th>Type Exam</th>
-                                        <th>Subject</th>
                                         <th>Options <span class="fa fa-wrench"></span></th>
                                     </tr>
                                 </tfoot>
@@ -124,7 +122,6 @@
                                         <td><%=e.getId_user()%></td>
                                         <td><%=e.getId_status()%></td>
                                         <td><%=e.getId_typeExa()%></td>
-                                        <td><%=e.getId_subject()%></td>
                                         <td>
                                             <a data-toggle="modal" data-target="#" class="btn btn-warning"
                                                data-id="<%=e.getId()%>"
@@ -135,8 +132,7 @@
                                                data-note="<%=e.getNote()%>"
                                                data-iduser="<%=e.getId_user()%>"
                                                data-idstatus="<%=e.getId_status()%>"
-                                               data-idtype="<%=e.getId_typeExa()%>"
-                                               data-idsubject="<%=e.getId_subject()%>">
+                                               data-idtype="<%=e.getId_typeExa()%>">
                                                <span class="fa fa-edit"></span> Edit
                                             </a>
                                             <a class="btn btn-danger" href="servletExam?action=delete&id=<%=e.getId()%>">

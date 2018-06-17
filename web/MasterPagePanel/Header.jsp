@@ -34,7 +34,7 @@
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapsePerfil">
                     <li>
-                        <a href="#">Mi informacion</a>
+                        <a href="servletInformation?action=getUser">Mi informacion</a>
                     </li>
                     <li>
                         <a href="changePassword.jsp">Cambiar contraseña</a>
