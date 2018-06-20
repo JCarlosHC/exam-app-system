@@ -96,7 +96,6 @@
                 </ul>
             </li>
             <% }
-                if (userType == 2 || userType == 3) {
             %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Examenes">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamPages" data-parent="#exampleAccordion">
@@ -104,15 +103,19 @@
                     <span class="nav-link-text">Examenes</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseExamPages">
+                    <%  if (userType == 2 || userType == 3) { %>
                     <li>
                         <a href="servletExam?action=typeExams">Tipo de examenes</a>
                     </li>
                     <li>
-                        <a href="servletExam?action=toList">Listar examenes</a>
-                    </li>
-                    <li>
                         <a href="servletExam?action=myExams">Mis examenes</a>
                     </li>
+                    <% } 
+                        if (userType == 1) { %>
+                    <li>
+                        <a href="servletExam?action=toList">Listar examenes</a>
+                    </li>
+                    <% } %>
                 </ul>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Alumnos">
@@ -121,21 +124,21 @@
                     <span class="nav-link-text">Alumnos</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseMulti">
+                    <%  if (userType == 2 || userType == 3) { %>
                     <li>
                         <a href="servletStudent?action=toList">Lista alumnos</a>
                     </li>
                     <li>
-                        <a href="servletSecuencia?action=toList">Listar secuencias</a>
-                    </li>
-                    <li>
                         <a href="servletSecuencia?action=mySecuencias">Mis secuencias</a>
                     </li>
+                    <% } if (userType == 1) { %>
+                    <li>
+                        <a href="servletSecuencia?action=toList">Listar secuencias</a>
+                    </li>
+                    <% } %>
                 </ul>
             </li>
-            <%
-                }
-                if (userType == 2) {
-            %>
+            <% if (userType == 2) { %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Secretarias">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSecretary" data-parent="#exampleAccordion">
                     <i class="fa fa-graduation-cap"></i>
