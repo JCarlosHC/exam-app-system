@@ -110,6 +110,9 @@
                     <li>
                         <a href="servletExam?action=myExams">Mis examenes</a>
                     </li>
+                    <li>
+                        <a href="servletExam?action=myQuestions">Mis preguntas</a>
+                    </li>
                     <% } 
                         if (userType == 1) { %>
                     <li>
